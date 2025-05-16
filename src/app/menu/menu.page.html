@@ -1,0 +1,54 @@
+<ion-menu side="end" menuId="first" contentId="main-content">
+  <ion-header>
+    <ion-toolbar class="header-toolbar">
+      <ion-title class="ion-text-center">Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item button [routerLink]="['/home']">
+        <ion-icon slot="start" name="home"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-item>
+      <ion-item button [routerLink]="['/menu']">
+        <ion-icon slot="start" name="apps"></ion-icon>
+        <ion-label>Menu</ion-label>
+      </ion-item>
+      <ion-item button [routerLink]="['/cadastro']">
+        <ion-icon slot="start" name="person-add"></ion-icon>
+        <ion-label>Cadastro</ion-label>
+      </ion-item>
+      <ion-item button [routerLink]="['/pedidos']">
+        <ion-icon slot="start" name="basket"></ion-icon>
+        <ion-label>integrantes</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-header>
+  <ion-toolbar >
+    <ion-title class="app-title">
+      <h1>LUME FILMS</h1>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button ></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="main-content" class="ion-padding main-content" [scrollEvents]="true">
+  <div class="catalog-wrapper">
+    <ng-container *ngFor="let categoria of categorias">
+      <div class="page-content">
+        <h2 class="section-title">{{ categoria.nome }}</h2>
+        <div class="carousel">
+          <div class="movie-card" *ngFor="let filme of categoria.filmes">
+            <img [src]="filme.imagem" [alt]="filme.titulo" />
+            <p>{{ filme.titulo }}</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ion-content>

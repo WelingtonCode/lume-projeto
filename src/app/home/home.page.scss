@@ -1,27 +1,132 @@
-#container {
-  text-align: center;
-
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+:host {
+  --ion-background-color: #121212;
+  --ion-text-color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+ion-toolbar {
+  --background: #1f1f1f;
+  border-bottom: 1px solid #333;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  color: #8c8c8c;
-
+.logo-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #f5c518; // Estilo IMDb
   margin: 0;
+  letter-spacing: 1px;
 }
 
-#container a {
+.header-icon {
+  font-size: 1.4rem;
+  color: #f5c518;
+  margin-right: 12px;
+}
+
+.login-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding: 24px;
+  background-color: #121212;
+}
+
+.login-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #f5c518;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.login-inputs {
+  width: 100%;
+  max-width: 400px;
+}
+
+ion-item {
+  --background: #1e1e1e;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  color: rgb(0, 0, 0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+ion-input {
+  color: white;
+}
+
+
+.login-links {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+.login-links a {
+  font-size: 0.9rem;
+  color: #f5c518;
   text-decoration: none;
+}
+
+.rounded-button {
+  --background: #f5c518;
+  --color: #121212;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 50px;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(245, 197, 24, 0.3);
+}
+
+.social-login {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.social-login img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.social-login img:hover {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .login-title {
+    font-size: 1.2rem;
+  }
+
+  .rounded-button {
+    font-size: 0.9rem;
+  }
+
+  .social-login img {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+ion-title h1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

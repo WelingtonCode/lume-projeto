@@ -1,20 +1,39 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-title class="title-container">
+      <h1 class="logo-title">LUME FILMS</h1>
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="arrow-redo-sharp" class="header-icon"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding login-content">
+  <h2 class="login-title">Entrar</h2>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div class="login-inputs">
+    <ion-item lines="inset">
+      <ion-input label="E-mail" label-placement="floating" placeholder="Digite seu e-mail" type="email"></ion-input>
+    </ion-item>
+    <ion-item lines="inset">
+      <ion-input label="Senha" label-placement="floating" placeholder="Digite sua senha" type="password"></ion-input>
+    </ion-item>
+  </div>
+
+  <div class="login-links">
+    <a [routerLink]="['/cadastro']">Criar conta</a>
+    <a [routerLink]="['/#']">Esqueceu a senha?</a>
+  </div>
+
+  <ion-button expand="full" class="rounded-button" (click)="irParaMenu()">
+    ENTRAR
+  </ion-button>
+
+<ion-item-divider></ion-item-divider>
+
+  <div class="social-login">
+    <img src="assets\google-icon.png" alt="Google" />
+    <img src="assets\facebook-logo-facebook-icon-transparent-free-png.webp" alt="Facebook" />
   </div>
 </ion-content>

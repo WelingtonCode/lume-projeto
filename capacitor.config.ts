@@ -1,9 +1,17 @@
-import type { CapacitorConfig } from '@capacitor/cli';
+import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
   appName: 'calculadora',
-  webDir: 'www'
+  webDir: 'www',
+  plugins: {
+    SplashScreen: {
+      launchShowDuration: 0
+    }
+  },
+  android: {
+    backgroundColor: "#121212"  
+  }
 };
 
 export default config;

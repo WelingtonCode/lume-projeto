@@ -1,0 +1,107 @@
+:host {
+  --ion-background-color: #121212;
+  --ion-text-color: #ffffff;
+  font-family: 'Montserrat', sans-serif;
+  display: block;
+  height: 100%;
+}
+
+ion-toolbar {
+  --background: #1f1f1f;
+  border-bottom: 1px solid #333;
+}
+
+ion-content {
+  height: 100%;
+  overflow-y: auto; // garante rolagem
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; // impede rolagem lateral
+}
+
+.app-title h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #f5c518;
+  margin: 0;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  margin: 20px 0 10px;
+  color: #f5c518;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.page-content {
+  margin-bottom: 20px;
+}
+
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  gap: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.movie-card {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  width: 150px;
+  background: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-card img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-bottom: 1px solid #333;
+}
+
+.movie-card p {
+  margin: 6px 0 10px;
+  font-size: 0.75rem;
+  color: #fff;
+  padding: 0 4px;
+}
+
+@media (max-width: 768px) {
+  .movie-card {
+    width: 90px;
+  }
+
+  .movie-card img {
+    height: 115px;
+  }
+
+  .section-title {
+    font-size: 1rem;
+    margin: 10px 0;
+  }
+}
+
+ion-title {
+  color: #f5c518;
+}
