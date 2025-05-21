@@ -2,15 +2,15 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-equipe',
   standalone: true,
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  templateUrl: './equipe.page.html',
+  styleUrls: ['./equipe.page.scss'],
 })
-export class HomePage {
+export class EquipePage {
   constructor(private router: Router) {}
 
-  irParaMenu() {
+  voltarMenu() {
     this.router.navigate(['/menu']);
   }
 }

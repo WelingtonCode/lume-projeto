@@ -1,107 +1,268 @@
-:host {
-  --ion-background-color: #121212;
-  --ion-text-color: #ffffff;
-  font-family: 'Montserrat', sans-serif;
-  display: block;
-  height: 100%;
-}
-
-ion-toolbar {
-  --background: #1f1f1f;
-  border-bottom: 1px solid #333;
-}
-
+/* Reset básico */
 ion-content {
-  height: 100%;
-  overflow-y: auto; // garante rolagem
+  --background: #121212;
+  color: #f5d76e;
+  padding: 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body, html {
+.menu-toggle {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: #f5d76e;
+  cursor: pointer;
+  user-select: none;
+  z-index: 1100;
+}
+
+/* Sidebar - lado direito */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -250px; /* começa escondido do lado direito */
+  width: 250px;
   height: 100%;
-  margin: 0;
+  background-color: #1a1a1a;
+  color: #f5d76e;
+  padding-top: 4rem;
+  transition: right 0.3s ease;
+  z-index: 1050;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.7);
+}
+
+.sidebar.active {
+  right: 0; /* menu aparece */
+}
+
+.sidebar ul {
+  list-style: none;
   padding: 0;
-  overflow-x: hidden; // impede rolagem lateral
-}
-
-.app-title h1 {
-  font-size: 1.5rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-  color: #f5c518;
   margin: 0;
 }
 
-.section-title {
-  font-size: 1.2rem;
-  margin: 20px 0 10px;
-  color: #f5c518;
+.sidebar ul li {
+  margin: 1rem 0;
+}
+
+.sidebar ul li a {
+  color: #f5d76e;
+  text-decoration: none;
   font-weight: 600;
-  text-transform: uppercase;
+  padding: 0.5rem 1.5rem;
+  display: block;
+  transition: background-color 0.3s;
 }
 
-.page-content {
-  margin-bottom: 20px;
+.sidebar ul li a:hover {
+  background-color: #f5d76e;
+  color: #121212;
+  border-radius: 4px;
 }
 
-.carousel {
+/* Sobreposição */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(18, 18, 18, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Título do app */
+.app-title h1 {
+  font-weight: 700;
+  color: #f5d76e;
+  margin: 0;
+}
+
+/* Seção categoria */
+.categoria-section {
+  margin-bottom: 2.5rem;
+}
+
+/* Título da categoria */
+.categoria-titulo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  border-bottom: 2px solid #f5d76e;
+  padding-bottom: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Container dos filmes com scroll horizontal */
+.filmes-scroll {
   display: flex;
   overflow-x: auto;
-  padding-bottom: 10px;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  gap: 10px;
-  -webkit-overflow-scrolling: touch;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: #f5d76e transparent;
 }
 
-.carousel::-webkit-scrollbar {
-  display: none;
+/* Webkit scroll */
+.filmes-scroll::-webkit-scrollbar {
+  height: 8px;
 }
 
-.movie-card {
-  scroll-snap-align: start;
-  flex: 0 0 auto;
-  width: 150px;
-  background: #1e1e1e;
+.filmes-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.filmes-scroll::-webkit-scrollbar-thumb {
+  background-color: #f5d76e;
+  border-radius: 4px;
+}
+
+/* Cartão do filme */
+.filme-card {
+  background-color: #1a1a1a;
+  border: 1px solid #f5d76e;
   border-radius: 8px;
-  overflow: hidden;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px; /* largura fixa para os cards em scroll horizontal */
+  flex-shrink: 0;
 }
 
-.movie-card:hover {
+.filme-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 10px #f5d76e;
 }
 
-.movie-card img {
+.filme-poster {
   width: 100%;
-  height: 130px;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
   object-fit: cover;
-  border-bottom: 1px solid #333;
+  aspect-ratio: 2 / 3;
 }
 
-.movie-card p {
-  margin: 6px 0 10px;
-  font-size: 0.75rem;
-  color: #fff;
-  padding: 0 4px;
+/* Modal do filme expandido */
+.modal-filme {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 2rem;
 }
 
-@media (max-width: 768px) {
-  .movie-card {
-    width: 90px;
-  }
-
-  .movie-card img {
-    height: 115px;
-  }
-
-  .section-title {
-    font-size: 1rem;
-    margin: 10px 0;
-  }
+.modal-filme-conteudo {
+  background: #121212;
+  border-radius: 12px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  display: flex;
+  gap: 2rem;
+  padding: 2rem;
+  box-shadow: 0 0 30px rgba(245, 215, 110, 0.9);
+  color: #f5d76e;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-ion-title {
-  color: #f5c518;
+.modal-filme-poster {
+  width: 300px;
+  height: auto;
+  border-radius: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(245, 215, 110, 0.6);
+  object-fit: cover;
+}
+
+.modal-filme-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.modal-filme-info h2 {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  color: #f5d76e;
+}
+
+.modal-filme-info p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  color: #fff8dc;
+}
+
+/* Barra visual da nota */
+.nota-barra {
+  display: inline-block;
+  height: 8px;
+  background-color: #f5d76e;
+  border-radius: 4px;
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  width: 0%;
+  transition: width 0.4s ease;
+  max-width: 100px;
+}
+
+/* Botão fechar */
+.btn-fechar {
+  align-self: flex-end;
+  padding: 10px 20px;
+  background-color: #f5d76e;
+  border: none;
+  border-radius: 8px;
+  color: #121212;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem;
+  width: fit-content;
+}
+
+.btn-fechar:hover {
+  background-color: #d4b44a;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .menu-toggle {
+    font-size: 1.8rem;
+  }
+
+  .filme-card {
+    width: 120px;
+  }
+
+  .modal-filme-conteudo {
+    flex-direction: column;
+    max-width: 95vw;
+  }
+
+  .modal-filme-poster {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1.5rem;
+  }
 }

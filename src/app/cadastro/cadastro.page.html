@@ -1,36 +1,45 @@
-<ion-header translucent>
-  <ion-toolbar>
-    <ion-title>Cadastro</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- Cabeçalho -->
+<header class="header">
+  <div class="toolbar">
+    <h1 class="logo-title">LUME FILMS</h1>
+  </div>
+</header>
 
-<ion-content class="cadastro-content" fullscreen>
-  <ion-grid class="cadastro-grid">
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" size-md="6">
-        <h2 class="cadastro-title">Olá! Realize seu cadastro para continuar.</h2>
+<!-- Conteúdo principal -->
+<main class="login-content">
+  <h2 class="login-title">Criar Conta</h2>
 
-        <div class="login-inputs">
-          <ion-item lines="inset">
-            <ion-input label="Nome" label-placement="floating" placeholder="Digite seu nome"></ion-input>
-          </ion-item>
+  <form class="login-inputs" (submit)="cadastrar(); $event.preventDefault()">
+    <div class="input-group">
+      <label for="nome">Nome completo</label>
+      <input id="nome" type="text" placeholder="Digite seu nome" required />
+    </div>
 
-          <ion-item lines="inset">
-            <ion-input label="E-mail" label-placement="floating" placeholder="Digite seu e-mail"></ion-input>
-          </ion-item>
+    <div class="input-group">
+      <label for="email">E-mail</label>
+      <input id="email" type="email" placeholder="Digite seu e-mail" required />
+    </div>
 
-          <ion-item lines="inset">
-            <ion-input label="Senha" type="password" label-placement="floating" placeholder="Digite sua senha"></ion-input>
-          </ion-item>
+    <div class="input-group">
+      <label for="senha">Senha</label>
+      <input id="senha" type="password" placeholder="Crie uma senha" required />
+    </div>
 
-          <ion-item lines="inset">
-            <ion-input label="Telefone" label-placement="floating" placeholder="Digite seu telefone"></ion-input>
-          </ion-item>
-        </div>
+    <div class="input-group">
+      <label for="confirmar">Confirmar Senha</label>
+      <input id="confirmar" type="password" placeholder="Confirme sua senha" required />
+    </div>
 
-        <ion-button class="brown-button" expand="block" [routerLink]="['/']">Fazer Cadastro</ion-button>
-        <ion-button fill="clear" color="medium" expand="block" [routerLink]="['/']">Voltar</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+    <button type="submit" class="rounded-button">
+      CADASTRAR
+    </button>
+  </form>
+
+  <hr class="divider" />
+
+  <div class="login-links">
+    <button class="header-icon" aria-label="ja tem conta" (click)="voltarHome()">
+      &#8592;
+    </button>
+  </div>
+</main>

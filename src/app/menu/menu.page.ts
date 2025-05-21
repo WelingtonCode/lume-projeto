@@ -1,7 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TmdbService } from '../services/tmdb.service';
+
+interface Filme {
+  titulo: string;
+  imagem?: string;
+  descricao?: string;
+  lancamento?: string;
+  nota?: number;
+}
+
+interface Categoria {
+  nome: string;
+  filmes: Filme[];
+}
 
 @Component({
   selector: 'app-menu',
@@ -10,108 +24,135 @@ import { RouterModule } from '@angular/router';
   templateUrl: './menu.page.html',
   styleUrls: ['./menu.page.scss'],
 })
-
-export class MenuPage {
-  categorias = [
+export class MenuPage implements OnInit {
+  categorias: Categoria[] = [
     {
       nome: 'Filmes em destaque',
       filmes: [
-        { titulo: 'Coringa', imagem: 'assets/joker.jpeg' },
-        { titulo: 'Flash', imagem: 'assets/Flash.webp' },
-        { titulo: 'Aquaman 2', imagem: 'assets/aqua.jpeg' },
-         { titulo: 'Duna: Parte Dois', imagem: 'assets/duna.webp' },
-        { titulo: 'Oppenheimer', imagem: 'assets/oppenheimer.webp' },
-        { titulo: 'Homem Aranha: Sem Volta Para Casa', imagem: 'assets/homemaranha.webp' },
+        { titulo: 'Duna: Parte Dois' },
+        { titulo: 'A Substância' },
+        { titulo: 'Oppenheimer' },
+        { titulo: 'Ainda Estou Aqui' },
+        { titulo: 'Barbie' },
+        { titulo: 'Tudo em Todo Lugar ao Mesmo Tempo' },
+        { titulo: 'Wicked' },
+        { titulo: 'O Dublê' },
       ],
     },
     {
       nome: 'Ação',
       filmes: [
-        { titulo: 'Mad Max: Estrada da Fúria', imagem: 'assets/madmax.jpg' },
-        { titulo: 'John Wick 4', imagem: 'assets/johnwick.jpg' },
-        { titulo: 'Gladiador', imagem: 'assets/gladiador.jpg' },
-         { titulo: 'Rambo', imagem: 'assets/rambo.webp' },
-        { titulo: 'Jack Reacher: O Último Tiro', imagem: 'assets/jackreacher.webp' },
-        { titulo: 'Velozes e Furiosos 9', imagem: 'assets/velozesefuriosos9.webp' },
-      ],
-    },
-    {
-      nome: 'Aventura',
-      filmes: [
-        { titulo: 'Indiana Jones: Os Caçadores da Arca Perdida', imagem: 'assets/indianajones.webp' },
-        { titulo: 'Jumanji: Bem-Vindo à Selva', imagem: 'assets/jumanji.webp' },
-        { titulo: 'Uncharted: Fora do Mapa', imagem: 'assets/uncharted.webp' },
-        { titulo: 'O Hobbit> Uma Jornada Inesperada', imagem: 'assets/hobbit.webp' },
-        { titulo: 'Harry Potter e a Câmara Secreta', imagem: 'assets/harrypotter.webp' },
-        { titulo: 'Viagem ao Centro da Terra', imagem: 'assets/viagemaocentrodaterra.webp' },
-      ],
-    },
-    {
-      nome: 'Comédia',
-      filmes: [
-        { titulo: 'Gente Grande', imagem: 'assets/gentegrande.webp' },
-        { titulo: 'As Branquelas', imagem: 'assets/asbranquelas.webp' },
-        { titulo: 'Click', imagem: 'assets/click.webp' },
-         { titulo: 'Amizade Colorida', imagem: 'assets/amizadecolorida.webp' },
-        { titulo: 'Ted 2', imagem: 'assets/ted2.webp' },
-        { titulo: 'Se Beber Não Case', imagem: 'assets/sebebernaocase.webp' },
-      ],
-    },
-    {
-      nome: 'Terror',
-      filmes: [
-        { titulo: 'Invocação do Mal', imagem: 'assets/invocaçaodomal.webp' },
-        { titulo: 'It - A Coisa', imagem: 'assets/itacoisa.webp' },
-        { titulo: 'Corra!', imagem: 'assets/corra.webp' },
-        { titulo: 'Hereditário', imagem: 'assets/hereditario.webp' },
-        { titulo: 'O Babadook', imagem: 'assets/babadook.webp' },
-        { titulo: 'Annabelle!', imagem: 'assets/annabelle.webp' },
-      ],
-    },
-    {
-      nome: 'Suspense',
-      filmes: [
-        { titulo: 'Fragmentado', imagem: 'assets/fragmentado.webp' },
-        { titulo: 'Amnésia', imagem: 'assets/amnesia.webp' },
-        { titulo: 'Seven: Os Sete Crimes Capitais', imagem: 'assets/seven.webp' },
-        { titulo: 'O Sexto Sentido', imagem: 'assets/osextosentido.webp' },
-        { titulo: 'Ilha Do Medo', imagem: 'assets/ilhadomedo.webp' },
-        { titulo: 'O Silêncio dos Inocentes', imagem: 'assets/osilenciodosinocentes.webp' },
+        { titulo: 'Batman - O Cavaleiro Das Trevas' },
+        { titulo: 'Capitão América: Guerra Civil' },
+        { titulo: 'Vingadores: Guerra Infinita' },
+        { titulo: 'John Wick' },
+        { titulo: 'Bastardos Inglórios' },
+        { titulo: 'Logan' },
+        { titulo: 'Tróia' },
+        { titulo: 'Top Gun: Maverick' },
       ],
     },
     {
       nome: 'Drama',
       filmes: [
-        { titulo: 'À Procura da Felicidade', imagem: 'assets/aprocuradafelicidade.webp' },
-        { titulo: 'O Pianista', imagem: 'assets/opianista.webp' },
-        { titulo: 'Clube da Luta', imagem: 'assets/clubedaluta.webp' },
-        { titulo: 'A Lista de Schindler', imagem: 'assets/alistadeschindler.webp' },
-        { titulo: 'Forrest Gump', imagem: 'assets/forrestgump.webp' },
-        { titulo: 'O Poderoso Chefão', imagem: 'assets/opoderosochefao.webp' },
+        { titulo: 'O Poderoso Chefão' },
+        { titulo: 'À Procura da Felicidade' },
+        { titulo: 'A Lista de Schindler' },
+        { titulo: 'Forrest Gump - O Contador de Histórias' },
+        { titulo: 'À Espera de um Milagre' },
+        { titulo: 'O Resgate do Soldado Ryan' },
+        { titulo: 'O Silêncio dos Inocentes' },
+        { titulo: 'Intocáveis' },
       ],
     },
     {
-      nome: 'Infantil',
+      nome: 'Comédia',
       filmes: [
-        { titulo: 'Toy Story 4', imagem: 'assets/toystory4.webp' },
-        { titulo: 'O Rei Leão', imagem: 'assets/oreileao.webp' },
-        { titulo: 'Tarzan', imagem: 'assets/tarzan.webp' },
-        { titulo: 'Viva: A Vida é Uma Festa', imagem: 'assets/vivaavidaeumafesta.webp' },
-        { titulo: 'Aladdin', imagem: 'assets/aladdin.webp' },
-        { titulo: 'Divertida Mente 2', imagem: 'assets/divertidamente2.webp' },
+        { titulo: 'O Auto da Compadecida' },
+        { titulo: 'Se Beber Não Case' },
+        { titulo: 'Curtindo a Vida Adoidado' },
+        { titulo: 'O Show de Truman' },
+        { titulo: 'Marley & Eu' },
+        { titulo: '10 Coisas que Eu Odeio em Você' },
+        { titulo: 'Brilho Eterno de uma Mente Sem Lembranças' },
+        { titulo: 'As Branquelas' },
+      ],
+    },
+    {
+      nome: 'Suspense',
+      filmes: [
+        { titulo: 'O Código Da Vinci' },
+        { titulo: 'O Sexto Sentido' },
+        { titulo: 'Seven - Os Sete Crimes Capitais' },
+        { titulo: 'Cães de Aluguel' },
+        { titulo: 'Clube da Luta' },
+        { titulo: 'Prenda-me Se For Capaz' },
+        { titulo: 'Ilha do Medo' },
+        { titulo: 'Corra!' },
+      ],
+    },
+    {
+      nome: 'Terror',
+      filmes: [
+        { titulo: 'Annabelle' },
+        { titulo: 'Invocação do Mal' },
+        { titulo: 'Alien o 8º Passageiro' },
+        { titulo: 'O Iluminado' },
+        { titulo: 'Constantine' },
+        { titulo: 'O Labirinto do Fauno' },
+        { titulo: 'A Freira' },
+        { titulo: 'Halloween' }, 
       ],
     },
     {
       nome: 'Policial',
       filmes: [
-        { titulo: 'Tropa de Elite', imagem: 'assets/tropadeelite.webp' },
-        { titulo: 'Infiltrados', imagem: 'assets/infiltrados.webp' },
-        { titulo: 'Cidade de Deus', imagem: 'assets/cidadededeus.webp' },
-           { titulo: 'Bad Boys', imagem: 'assets/badboys.webp' },
-        { titulo: 'A Hora do Rush', imagem: 'assets/ahoradorush.webp' },
-        { titulo: 'Trem Bala', imagem: 'assets/trembala.webp' },
+        { titulo: 'Cidade de Deus' },
+        { titulo: 'Scarface' },
+        { titulo: 'Pulp Fiction - Tempo de Violência' },
+        { titulo: 'Os Infiltrados' },
+        { titulo: 'Tropa de Elite 2' },
+        { titulo: 'Os Intocáveis' },
+        { titulo: 'Taxi Driver' },
+        { titulo: 'Janela Indiscreta' },
       ],
     },
   ];
-}
 
+  menuAberto = false;
+  filmeExpandido: Filme | null = null;
+
+  constructor(private tmdbService: TmdbService) {}
+
+  ngOnInit() {
+    this.carregarDetalhesFilmes();
+  }
+
+  toggleMenu() {
+    this.menuAberto = !this.menuAberto;
+  }
+
+  // Corrigido para aceitar Filme | null
+  toggleFilmeExpandido(filme: Filme | null) {
+    this.filmeExpandido = this.filmeExpandido === filme ? null : filme;
+  }
+
+  async carregarDetalhesFilmes() {
+    for (const categoria of this.categorias) {
+      for (const filme of categoria.filmes) {
+        const detalhes: any = await this.tmdbService.getMovieFullDataByTitle(filme.titulo);
+        if (detalhes) {
+          filme.imagem = `https://image.tmdb.org/t/p/w500${detalhes.poster_path}`;
+          filme.descricao = detalhes.overview;
+          filme.lancamento = detalhes.release_date;
+          filme.nota = detalhes.vote_average;
+        } else {
+          filme.imagem = 'assets/default-movie.png';
+          filme.descricao = 'Descrição não disponível.';
+          filme.lancamento = '';
+          filme.nota = 0;
+        }
+      }
+    }
+  }
+}

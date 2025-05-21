@@ -1,13 +1,24 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro',
-  standalone: true,
-  imports: [IonicModule, CommonModule, RouterModule],
   templateUrl: './cadastro.page.html',
   styleUrls: ['./cadastro.page.scss'],
 })
-export class CadastroPage {}
+export class CadastroPage {
+  constructor(private router: Router) {}
+
+  cadastrar() {
+    alert('Cadastro realizado com sucesso!');
+    this.router.navigate(['/home']);
+  }
+
+  voltarLogin() {
+    this.router.navigate(['/home']);
+  }
+
+  voltarHome() {
+    this.router.navigate(['/menu']);
+  }
+}
