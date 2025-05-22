@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'calculadora',
+  appName: 'Lume',
   webDir: 'www',
   plugins: {
     SplashScreen: {
