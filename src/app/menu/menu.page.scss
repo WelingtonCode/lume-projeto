@@ -1,26 +1,63 @@
-/* Reset básico */
-ion-content {
-  --background: #121212;
+:root {
+  --header-height: 56px;
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.main-content {
+  margin-top: calc(var(--header-height) + var(--safe-area-top));
+  padding-top: 1rem; 
+  min-height: calc(100vh - var(--header-height) - var(--safe-area-top));
+}
+
+.sidebar {
+  padding-top: calc(4rem + var(--safe-area-top));
+}
+
+.app-title h1 {
+  font-size: clamp(1rem, 5vw, 1.5rem);
+  transition: font-size 0.3s ease;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #1f1f1f;
+  border-bottom: 1px solid #333;
+  z-index: 1000;
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  height: calc(56px + env(safe-area-inset-top));
+}
+
+.main-content {
+  background-color: #121212;
   color: #f5d76e;
   padding: 1rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  height: 100vh;  /* Altura total da viewport */
+  height: 100vh;
   box-sizing: border-box;
-  overflow-x: hidden; /* Impede scroll lateral da página */
-  overflow-y: auto; /* Habilita scroll vertical */
-  -webkit-overflow-scrolling: touch; /* Suaviza scroll no iOS */
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* Ajuste base para ion-toolbar: logo à esquerda, menu hamburger à direita */
-ion-toolbar.toolbar-custom {
+.toolbar-custom {
+color: dark;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative;
   padding: 0 1rem;
-  height: 56px; /* altura padrão */
+  height: 56px; 
   box-sizing: border-box;
-  padding-top: 20px;
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
 }
 
 /* Logo (app-title) */
@@ -30,26 +67,27 @@ ion-toolbar.toolbar-custom {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: calc(100vw - 80px); /* Considera o espaço do botão de menu */
+  padding-right: 10px;
 }
 
 .app-title h1 {
   margin: 0;
   font-weight: 700;
   color: #f5d76e;
-  font-size: 1.5rem;
+  font-size: clamp(1rem, 4vw, 1.5rem); /* Tamanho responsivo */
   user-select: none;
+  line-height: 1.2;
 }
 
-/* Botão menu toggle */
+/* Botão menu */
 .menu-toggle {
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: #f5d76e;
   cursor: pointer;
   user-select: none;
   flex-shrink: 0;
-  position: relative;
-  align-content: right;
-
+  padding: 0 10px;
 }
 
 /* Sidebar */
@@ -203,7 +241,9 @@ ion-toolbar.toolbar-custom {
   align-items: center;
   z-index: 9999;
   padding: 1rem;
-  overflow-y: auto; /* Evita que ultrapasse a viewport */
+  overflow-y: auto; 
+  padding-top: calc(var(--header-height) + var(--safe-area-top));
+  padding-bottom: var(--safe-area-bottom);
 }
 
 .modal-filme-conteudo {
@@ -219,6 +259,7 @@ ion-toolbar.toolbar-custom {
   box-shadow: 0 0 30px rgba(245, 215, 110, 0.9);
   color: #f5d76e;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 1rem;
 }
 
 .modal-filme-poster {
@@ -337,5 +378,41 @@ ion-toolbar.toolbar-custom {
 
   .filme-card {
     width: 140px;
+  }
+}
+
+@media (max-width: 380px) {
+  .header {
+    height: calc(50px + env(safe-area-inset-top));
+  }
+  
+  .toolbar-custom {
+    height: 50px;
+  }
+  
+  .app-title h1 {
+    font-size: 1rem;
+  }
+  
+  .menu-toggle {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  :root {
+    --header-height: 48px;
+  }
+  
+  .toolbar-custom {
+    padding: 0 0.5rem;
+  }
+  
+  .filme-card {
+    width: 110px;
+  }
+  
+  .modal-filme-poster {
+    width: 100%;
   }
 }

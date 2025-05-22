@@ -1,10 +1,15 @@
-<!-- Menu lateral do lado direito -->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+</head>
+
+
+
 <nav [class.active]="menuAberto" class="sidebar sidebar-right">
   <ul>
     <li><a routerLink="/home" (click)="toggleMenu()">Início</a></li>
     <li><a routerLink="/menu" (click)="toggleMenu()">Filmes</a></li>
     <li><a routerLink="/cadastro" (click)="toggleMenu()">Cadastro</a></li>
-    <li><a routerLink="/equipe" (click)="toggleMenu()">Integrantes</a></li>
+    <li><a routerLink="/equipe" (click)="toggleMenu()">Desenvolvedores</a></li>
   </ul>
 </nav>
 
@@ -12,17 +17,16 @@
 <div [class.active]="menuAberto" class="overlay" (click)="toggleMenu()"></div>
 
 <!-- Cabeçalho -->
-<ion-header>
-  <ion-toolbar color="dark" class="toolbar-custom">
+<header class="header">
+  <div class="toolbar-custom">
     <div class="app-title"><h1>LUME FILMS</h1></div>
     <div class="menu-toggle" (click)="toggleMenu()">☰</div>
-  </ion-toolbar>
-</ion-header>
-
+  </div>
+</header> 
 
 
 <!-- Conteúdo principal -->
-<ion-content>
+<div class="main-content">
   <section *ngFor="let categoria of categorias" class="categoria-section">
     <h2 class="categoria-titulo">{{ categoria.nome }}</h2>
     <div class="filmes-scroll">
@@ -54,4 +58,4 @@
       </div>
     </div>
   </div>
-</ion-content>
+</div>
