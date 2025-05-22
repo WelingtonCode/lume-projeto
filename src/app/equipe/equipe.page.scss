@@ -4,81 +4,160 @@
   padding: 16px;
   font-family: 'Montserrat', sans-serif;
   min-height: 100vh;
-}
-
-.header {
-  background: #1f1f1f;
-  padding: 12px 0;
-  border-bottom: 1px solid #333;
-  text-align: center;
-}
-
-.title {
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #f5c518; 
-  margin: 0;
-  font-size: 1.6rem;
-}
-
-.equipe-list {
-  margin-top: 20px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  justify-content: space-between;
+
+  .header {
+    background: #1f1f1f;
+    padding: 16px 0;
+    border-bottom: 1px solid #333;
+    text-align: center;
+
+    .title {
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #f5c518;
+      margin: 0;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      animation: fadeInDown 0.6s ease-out;
+    }
+  }
+
+  .equipe-list {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .equipe-item {
+      display: flex;
+      align-items: center;
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.6s ease forwards;
+
+      &:hover {
+        transform: scale(1.03);
+        box-shadow: 0 4px 12px rgba(245, 197, 24, 0.5);
+      }
+
+      .avatar {
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 14px;
+        flex-shrink: 0;
+        box-shadow: 0 0 6px rgba(245, 197, 24, 0.6);
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .label {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: #fff;
+        word-break: break-word;
+      }
+    }
+  }
+
+  .voltar-container {
+    margin-top: auto;
+    text-align: center;
+    padding-top: 24px;
+
+    .btn-voltar {
+      background-color: #000;
+      color: #f5c518;
+      border: 2px solid #f5c518;
+      border-radius: 50px;
+      padding: 12px 28px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      font-size: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: #f5c518;
+        color: #121212;
+        transform: translateY(-2px);
+      }
+    }
+  }
 }
 
-.equipe-item {
-  display: flex;
-  align-items: center;
-  background: #1e1e1e;
-  border-radius: 10px;
-  padding: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+/* Animações */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 16px;
-  flex-shrink: 0;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
+/* Responsividade */
+@media (max-width: 360px) {
+  .equipe-content {
+    .header {
+      .title {
+        font-size: 1.15rem;
+      }
+    }
 
-.label {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #fff;
-}
+    .equipe-list {
+      .equipe-item {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 16px;
 
-.voltar-container {
-  margin: 30px 0 0;
-  text-align: center;
-}
+        .avatar {
+          margin: 0 0 12px 0;
+          width: 80px;
+          height: 80px;
+        }
 
-.btn-voltar {
-  background-color: #000;
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 24px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  font-size: 0.95rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-  transition: background-color 0.3s;
-}
+        .label {
+          font-size: 1rem;
+        }
+      }
+    }
 
-.btn-voltar:hover {
-  background-color: #f5c518;
-  color: #fff;
+    .voltar-container {
+      .btn-voltar {
+        width: 100%;
+        max-width: 280px;
+        font-size: 0.9rem;
+        padding: 12px 0;
+      }
+    }
+  }
 }

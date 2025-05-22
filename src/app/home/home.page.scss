@@ -4,10 +4,11 @@
   font-family: 'Montserrat', sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
-  height: 100vh;
+  min-height: 100vh; /* Alterado de height para min-height */
   margin: 0;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 /* Header */
@@ -22,6 +23,8 @@
   align-items: center;
   position: relative;
   padding: 12px 16px;
+  padding-top: 16px;
+
 }
 
 .logo-title {
@@ -46,10 +49,11 @@
 .login-content {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
-  padding: 24px;
+  padding: 24px 16px;
   flex-grow: 1;
+  overflow-y: auto; /* Adicionado para permitir scroll no mobile */
 }
 
 .login-title {
@@ -59,11 +63,19 @@
   margin-top: 1rem;
   margin-bottom: 2rem;
   text-transform: uppercase;
+  text-align: center;
+}
+
+/* Ajuste: largura adaptativa */
+.login-inputs,
+.login-links,
+.rounded-button,
+.divider {
+  width: 90%;
+  max-width: 400px;
 }
 
 .login-inputs {
-  width: 100%;
-  max-width: 400px;
   display: flex;
   flex-direction: column;
 }
@@ -76,12 +88,11 @@
   padding: 10px 12px;
   display: flex;
   flex-direction: column;
-  height: 4.5rem;
 }
 
 .input-group label {
   color: #f5c518;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   margin-bottom: 6px;
 }
 
@@ -101,13 +112,13 @@
 .login-links {
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  max-width: 400px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .login-links a {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #f5c518;
   text-decoration: none;
   cursor: pointer;
@@ -119,14 +130,13 @@
   font-weight: bold;
   text-transform: uppercase;
   border-radius: 50px;
-  width: 100%;
-  max-width: 400px;
   margin-bottom: 20px;
   padding: 12px 0;
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(245, 197, 24, 0.3);
   transition: background-color 0.3s ease;
+  font-size: 1rem;
 }
 
 .rounded-button:hover {
@@ -134,8 +144,6 @@
 }
 
 .divider {
-  width: 100%;
-  max-width: 400px;
   border: 0;
   border-top: 1px solid #333;
   margin-bottom: 10px;
@@ -160,9 +168,18 @@
   transform: scale(1.1);
 }
 
+/* Responsividade */
 @media (max-width: 768px) {
+  .logo-title {
+    font-size: 1.3rem;
+  }
+
   .login-title {
     font-size: 1.2rem;
+  }
+
+  .input-group label {
+    font-size: 0.8rem;
   }
 
   .rounded-button {
@@ -172,5 +189,28 @@
   .social-login img {
     width: 32px;
     height: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .toolbar {
+    padding: 12px 8px;
+  }
+
+  .logo-title {
+    font-size: 1.1rem;
+  }
+
+  .header-icon {
+    font-size: 1.2rem;
+    right: 12px;
+  }
+
+  .login-content {
+    padding: 16px 8px;
+  }
+
+  .social-login {
+    gap: 12px;
   }
 }

@@ -4,25 +4,59 @@ ion-content {
   color: #f5d76e;
   padding: 1rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;  /* Altura total da viewport */
+  box-sizing: border-box;
+  overflow-x: hidden; /* Impede scroll lateral da página */
+  overflow-y: auto; /* Habilita scroll vertical */
+  -webkit-overflow-scrolling: touch; /* Suaviza scroll no iOS */
 }
 
+/* Ajuste base para ion-toolbar: logo à esquerda, menu hamburger à direita */
+ion-toolbar.toolbar-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 0 1rem;
+  height: 56px; /* altura padrão */
+  box-sizing: border-box;
+  padding-top: 20px;
+}
+
+/* Logo (app-title) */
+.app-title {
+  flex: 1;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app-title h1 {
+  margin: 0;
+  font-weight: 700;
+  color: #f5d76e;
+  font-size: 1.5rem;
+  user-select: none;
+}
+
+/* Botão menu toggle */
 .menu-toggle {
-  position: absolute;
-  top: 50%;
-  right: 1rem;
-  transform: translateY(-50%);
   font-size: 2rem;
   color: #f5d76e;
   cursor: pointer;
   user-select: none;
-  z-index: 1100;
+  flex-shrink: 0;
+  position: relative;
+  align-content: right;
+
 }
 
-/* Sidebar - lado direito */
+/* Sidebar */
 .sidebar {
   position: fixed;
   top: 0;
-  right: -250px; /* começa escondido do lado direito */
+  right: -250px;
   width: 250px;
   height: 100%;
   background-color: #1a1a1a;
@@ -34,7 +68,7 @@ ion-content {
 }
 
 .sidebar.active {
-  right: 0; /* menu aparece */
+  right: 0;
 }
 
 .sidebar ul {
@@ -53,7 +87,7 @@ ion-content {
   font-weight: 600;
   padding: 0.5rem 1.5rem;
   display: block;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .sidebar ul li a:hover {
@@ -62,7 +96,7 @@ ion-content {
   border-radius: 4px;
 }
 
-/* Sobreposição */
+/* Overlay */
 .overlay {
   position: fixed;
   top: 0;
@@ -81,21 +115,14 @@ ion-content {
   visibility: visible;
 }
 
-/* Título do app */
-.app-title h1 {
-  font-weight: 700;
-  color: #f5d76e;
-  margin: 0;
-}
-
 /* Seção categoria */
 .categoria-section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 
 /* Título da categoria */
 .categoria-titulo {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
   border-bottom: 2px solid #f5d76e;
   padding-bottom: 0.25rem;
@@ -106,15 +133,15 @@ ion-content {
 .filmes-scroll {
   display: flex;
   overflow-x: auto;
-  gap: 1rem;
+  gap: 0.75rem;
   padding-bottom: 0.5rem;
   scrollbar-width: thin;
   scrollbar-color: #f5d76e transparent;
+  -webkit-overflow-scrolling: touch; /* Melhora no iOS */
 }
 
-/* Webkit scroll */
 .filmes-scroll::-webkit-scrollbar {
-  height: 8px;
+  height: 6px;
 }
 
 .filmes-scroll::-webkit-scrollbar-track {
@@ -137,7 +164,7 @@ ion-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 150px; /* largura fixa para os cards em scroll horizontal */
+  width: 140px;
   flex-shrink: 0;
 }
 
@@ -154,6 +181,17 @@ ion-content {
   aspect-ratio: 2 / 3;
 }
 
+/* Título do filme com corte e centralizado */
+.filme-card h3 {
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  text-align: center;
+  margin: 0;
+}
+
 /* Modal do filme expandido */
 .modal-filme {
   position: fixed;
@@ -164,27 +202,28 @@ ion-content {
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  padding: 2rem;
+  padding: 1rem;
+  overflow-y: auto; /* Evita que ultrapasse a viewport */
 }
 
 .modal-filme-conteudo {
   background: #121212;
   border-radius: 12px;
-  max-width: 900px;
   width: 100%;
+  max-width: 90vw;
   max-height: 85vh;
   overflow-y: auto;
   display: flex;
-  gap: 2rem;
-  padding: 2rem;
+  gap: 1.5rem;
+  padding: 1.5rem;
   box-shadow: 0 0 30px rgba(245, 215, 110, 0.9);
   color: #f5d76e;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .modal-filme-poster {
-  width: 300px;
-  height: auto;
+  width: 280px;
+  max-width: 100%;
   border-radius: 8px;
   flex-shrink: 0;
   box-shadow: 0 4px 20px rgba(245, 215, 110, 0.6);
@@ -199,7 +238,7 @@ ion-content {
 }
 
 .modal-filme-info h2 {
-  font-size: 2.4rem;
+  font-size: 1.8rem;
   margin-bottom: 1rem;
   font-weight: 700;
   letter-spacing: 1.1px;
@@ -207,7 +246,7 @@ ion-content {
 }
 
 .modal-filme-info p {
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.5;
   margin-bottom: 1rem;
   color: #fff8dc;
@@ -238,7 +277,6 @@ ion-content {
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 1rem;
-  width: fit-content;
 }
 
 .btn-fechar:hover {
@@ -246,23 +284,58 @@ ion-content {
 }
 
 /* Responsividade */
-@media (max-width: 600px) {
-  .menu-toggle {
-    font-size: 1.8rem;
-  }
-
-  .filme-card {
-    width: 120px;
-  }
-
+@media (max-width: 650px) {
   .modal-filme-conteudo {
     flex-direction: column;
-    max-width: 95vw;
+    gap: 1rem;
+    padding: 1rem;
   }
 
   .modal-filme-poster {
-    width: 100%;
-    height: auto;
-    margin-bottom: 1.5rem;
+    width: 80%;
+    margin-bottom: 1rem;
+  }
+
+  .modal-filme-info h2 {
+    font-size: 1.2rem;
+  }
+
+  .modal-filme-info p {
+    font-size: 0.80rem;
+  }
+
+  .filme-card {
+    width: 90px;
+  }
+
+  .categoria-titulo {
+    font-size: 1.10rem;
+  }
+
+  .app-title h1 {
+    font-size: 1.4rem;
+  }
+
+  .menu-toggle {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .sidebar {
+    width: 150px;
+    padding-top: 2rem;
+  }
+
+  .app-title h1 {
+    font-size: 0.90rem;
+  }
+
+  .menu-toggle {
+    font-size: 1.3rem;
+  }
+
+  .filme-card {
+    width: 140px;
   }
 }
