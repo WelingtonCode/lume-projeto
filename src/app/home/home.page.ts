@@ -13,4 +13,10 @@ export class HomePage {
   irParaMenu() {
     this.router.navigate(['/menu']);
   }
+
+
+ irParaCadastro() {
+    this.router.navigate(['/cadastro']);
+  }
 }
+

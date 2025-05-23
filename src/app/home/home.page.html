@@ -21,14 +21,20 @@
     </div>
 
     <div class="login-links">
-      <a routerLink="/cadastro">Criar conta</a>
       <a routerLink="#">Esqueceu a senha?</a>
     </div>
+
 
     <button type="submit" class="rounded-button">
       ENTRAR
     </button>
   </form>
+
+   <form class="login-inputs" (submit)="irParaCadastro(); $event.preventDefault()">
+ <button type="submit" class="rounded-button">
+      CRIAR CONTA
+    </button>
+   </form>
 
   <hr class="divider" />
 

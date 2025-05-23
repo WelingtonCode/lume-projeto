@@ -115,6 +115,7 @@
   margin-bottom: 20px;
   flex-wrap: wrap;
   gap: 10px;
+ 
 }
 
 .login-links a {
@@ -122,6 +123,7 @@
   color: #f5c518;
   text-decoration: none;
   cursor: pointer;
+
 }
 
 .rounded-button {
@@ -131,12 +133,14 @@
   text-transform: uppercase;
   border-radius: 50px;
   margin-bottom: 20px;
+  margin-left: 18px;
   padding: 12px 0;
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(245, 197, 24, 0.3);
   transition: background-color 0.3s ease;
   font-size: 1rem;
+ 
 }
 
 .rounded-button:hover {
