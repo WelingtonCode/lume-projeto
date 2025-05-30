@@ -12,9 +12,19 @@ interface Filme {
   nota?: number;
 }
 
+// Defining the TmdbMovie interface here
+interface TmdbMovie {
+  title: string;
+  poster_path: string;
+  overview: string;
+  release_date: string;
+  vote_average: number;
+}
+
 interface Categoria {
   nome: string;
   filmes: Filme[];
+  genreId: number;
 }
 
 @Component({
@@ -26,97 +36,13 @@ interface Categoria {
 })
 export class HomePage implements OnInit {
   categorias: Categoria[] = [
-    {
-      nome: 'Filmes em destaque',
-      filmes: [
-        { titulo: 'Duna: Parte Dois' },
-        { titulo: 'A Substância' },
-        { titulo: 'Oppenheimer' },
-        { titulo: 'Ainda Estou Aqui' },
-        { titulo: 'Barbie' },
-        { titulo: 'Tudo em Todo Lugar ao Mesmo Tempo' },
-        { titulo: 'Wicked' },
-        { titulo: 'O Dublê' },
-      ],
-    },
-    {
-      nome: 'Ação',
-      filmes: [
-        { titulo: 'Batman - O Cavaleiro Das Trevas' },
-        { titulo: 'Capitão América: Guerra Civil' },
-        { titulo: 'Vingadores: Guerra Infinita' },
-        { titulo: 'John Wick' },
-        { titulo: 'Bastardos Inglórios' },
-        { titulo: 'Logan' },
-        { titulo: 'Tróia' },
-        { titulo: 'Top Gun: Maverick' },
-      ],
-    },
-    {
-      nome: 'Drama',
-      filmes: [
-        { titulo: 'O Poderoso Chefão' },
-        { titulo: 'À Procura da Felicidade' },
-        { titulo: 'A Lista de Schindler' },
-        { titulo: 'Forrest Gump - O Contador de Histórias' },
-        { titulo: 'À Espera de um Milagre' },
-        { titulo: 'O Resgate do Soldado Ryan' },
-        { titulo: 'O Silêncio dos Inocentes' },
-        { titulo: 'Intocáveis' },
-      ],
-    },
-    {
-      nome: 'Comédia',
-      filmes: [
-        { titulo: 'O Auto da Compadecida' },
-        { titulo: 'Se Beber Não Case' },
-        { titulo: 'Curtindo a Vida Adoidado' },
-        { titulo: 'O Show de Truman' },
-        { titulo: 'Marley & Eu' },
-        { titulo: '10 Coisas que Eu Odeio em Você' },
-        { titulo: 'Brilho Eterno de uma Mente Sem Lembranças' },
-        { titulo: 'As Branquelas' },
-      ],
-    },
-    {
-      nome: 'Suspense',
-      filmes: [
-        { titulo: 'O Código Da Vinci' },
-        { titulo: 'O Sexto Sentido' },
-        { titulo: 'Seven - Os Sete Crimes Capitais' },
-        { titulo: 'Cães de Aluguel' },
-        { titulo: 'Clube da Luta' },
-        { titulo: 'Prenda-me Se For Capaz' },
-        { titulo: 'Ilha do Medo' },
-        { titulo: 'Corra!' },
-      ],
-    },
-    {
-      nome: 'Terror',
-      filmes: [
-        { titulo: 'Annabelle' },
-        { titulo: 'Invocação do Mal' },
-        { titulo: 'Alien o 8º Passageiro' },
-        { titulo: 'O Iluminado' },
-        { titulo: 'Constantine' },
-        { titulo: 'O Labirinto do Fauno' },
-        { titulo: 'A Freira' },
-        { titulo: 'Halloween' }, 
-      ],
-    },
-    {
-      nome: 'Policial',
-      filmes: [
-        { titulo: 'Cidade de Deus' },
-        { titulo: 'Scarface' },
-        { titulo: 'Pulp Fiction - Tempo de Violência' },
-        { titulo: 'Os Infiltrados' },
-        { titulo: 'Tropa de Elite 2' },
-        { titulo: 'Os Intocáveis' },
-        { titulo: 'Taxi Driver' },
-        { titulo: 'Janela Indiscreta' },
-      ],
-    },
+    { nome: 'Filmes em destaque', genreId: 28, filmes: [] },
+    { nome: 'Ação', genreId: 28, filmes: [] },
+    { nome: 'Drama', genreId: 18, filmes: [] },
+    { nome: 'Comédia', genreId: 35, filmes: [] },
+    { nome: 'Suspense', genreId: 53, filmes: [] },
+    { nome: 'Terror', genreId: 27, filmes: [] },
+    { nome: 'Policial', genreId: 80, filmes: [] },
   ];
 
   menuAberto = false;
@@ -132,27 +58,24 @@ export class HomePage implements OnInit {
     this.menuAberto = !this.menuAberto;
   }
 
-  // Corrigido para aceitar Filme | null
   toggleFilmeExpandido(filme: Filme | null) {
     this.filmeExpandido = this.filmeExpandido === filme ? null : filme;
   }
 
+  // Load random movies for each category
   async carregarDetalhesFilmes() {
     for (const categoria of this.categorias) {
-      for (const filme of categoria.filmes) {
-        const detalhes: any = await this.tmdbService.getMovieFullDataByTitle(filme.titulo);
-        if (detalhes) {
-          filme.imagem = `https://image.tmdb.org/t/p/w500${detalhes.poster_path}`;
-          filme.descricao = detalhes.overview;
-          filme.lancamento = detalhes.release_date;
-          filme.nota = detalhes.vote_average;
-        } else {
-          filme.imagem = 'assets/default-movie.png';
-          filme.descricao = 'Descrição não disponível.';
-          filme.lancamento = '';
-          filme.nota = 0;
-        }
-      }
+      const randomPage = Math.floor(Math.random() * 10) + 1; // Random page (1-10)
+      const detalhes: any = await this.tmdbService.getMoviesByCategory(categoria.genreId, randomPage).toPromise();
+
+      // Update the category's movie list with random TMDb data
+      categoria.filmes = detalhes.results.map((filme: TmdbMovie) => ({
+        titulo: filme.title,
+        imagem: filme.poster_path ? `https://image.tmdb.org/t/p/w500${filme.poster_path}` : 'assets/default-movie.png',
+        descricao: filme.overview || 'Descrição não disponível.',
+        lancamento: filme.release_date || '',
+        nota: filme.vote_average || 0
+      }));
     }
   }
 }
