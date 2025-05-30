@@ -1,0 +1,45 @@
+<!-- Cabeçalho simples -->
+<header class="header">
+  <div class="toolbar">
+    <h1 class="logo-title">LUME FILMS</h1>
+  </div>
+</header>
+
+<!-- Conteúdo principal -->
+<main class="login-content">
+  <h2 class="login-title">Entrar</h2>
+
+  <form class="login-inputs" (submit)="irParaHome(); $event.preventDefault()">
+    <div class="input-group">
+      <label for="email">E-mail</label>
+      <input id="email" type="email" placeholder="Digite seu e-mail" required />
+    </div>
+
+    <div class="input-group">
+      <label for="senha">Senha</label>
+      <input id="senha" type="password" placeholder="Digite sua senha" required />
+    </div>
+
+    <div class="login-links">
+      <a routerLink="#">Esqueceu a senha?</a>
+    </div>
+
+
+    <button type="submit" class="rounded-button">
+      ENTRAR
+    </button>
+  </form>
+
+   <form class="login-inputs" (submit)="irParaCadastro(); $event.preventDefault()">
+ <button type="submit" class="rounded-button">
+      CRIAR CONTA
+    </button>
+   </form>
+
+  <hr class="divider" />
+
+  <div class="social-login">
+    <img src="assets/google-icon.png" alt="Google" />
+    <img src="assets/facebook-logo-facebook-icon-transparent-free-png.webp" alt="Facebook" />
+  </div>
+</main>

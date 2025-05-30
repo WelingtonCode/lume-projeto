@@ -1,45 +1,61 @@
-<!-- Cabeçalho simples -->
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+</head>
+
+
+
+<nav [class.active]="menuAberto" class="sidebar sidebar-right">
+  <ul>
+    <li><a routerLink="/login" (click)="toggleMenu()">Início</a></li>
+    <li><a routerLink="/home" (click)="toggleMenu()">Filmes</a></li>
+    <li><a routerLink="/cadastro" (click)="toggleMenu()">Cadastro</a></li>
+    <li><a routerLink="/equipe" (click)="toggleMenu()">Desenvolvedores</a></li>
+  </ul>
+</nav>
+
+<!-- Sobreposição para fechar menu ao clicar fora -->
+<div [class.active]="menuAberto" class="overlay" (click)="toggleMenu()"></div>
+
+<!-- Cabeçalho -->
 <header class="header">
-  <div class="toolbar">
-    <h1 class="logo-title">LUME FILMS</h1>
+  <div class="toolbar-custom">
+    <div class="app-title"><h1>LUME FILMS</h1></div>
+    <div class="menu-toggle" (click)="toggleMenu()">☰</div>
   </div>
-</header>
+</header> 
+
 
 <!-- Conteúdo principal -->
-<main class="login-content">
-  <h2 class="login-title">Entrar</h2>
-
-  <form class="login-inputs" (submit)="irParaMenu(); $event.preventDefault()">
-    <div class="input-group">
-      <label for="email">E-mail</label>
-      <input id="email" type="email" placeholder="Digite seu e-mail" required />
+<div class="main-content">
+  <section *ngFor="let categoria of categorias" class="categoria-section">
+    <h2 class="categoria-titulo">{{ categoria.nome }}</h2>
+    <div class="filmes-scroll">
+      <article 
+        *ngFor="let filme of categoria.filmes | slice:0:8" 
+        class="filme-card" 
+        (click)="toggleFilmeExpandido(filme)"
+      >
+        <img [src]="filme.imagem" [alt]="filme.titulo" class="filme-poster" />
+        <h3>{{ filme.titulo }}</h3>
+      </article>
     </div>
+  </section>
 
-    <div class="input-group">
-      <label for="senha">Senha</label>
-      <input id="senha" type="password" placeholder="Digite sua senha" required />
+  <!-- Modal expandido do filme -->
+  <div class="modal-filme" *ngIf="filmeExpandido" (click)="toggleFilmeExpandido(null)">
+    <div class="modal-filme-conteudo" (click)="$event.stopPropagation()">
+      <img [src]="filmeExpandido.imagem" [alt]="filmeExpandido.titulo" class="modal-filme-poster" />
+      <div class="modal-filme-info">
+        <h2>{{ filmeExpandido.titulo }}</h2>
+        <p><strong>Descrição:</strong> {{ filmeExpandido.descricao }}</p>
+        <p><strong>Lançamento:</strong> {{ filmeExpandido.lancamento }}</p>
+        <p>
+          <strong>Nota:</strong> 
+          {{ filmeExpandido.nota }} 
+          <span class="nota-barra" [style.width.%]="(filmeExpandido?.nota ?? 0) * 10"></span>
+        </p>
+        <button (click)="toggleFilmeExpandido(null)" class="btn-fechar">Fechar</button>
+      </div>
     </div>
-
-    <div class="login-links">
-      <a routerLink="#">Esqueceu a senha?</a>
-    </div>
-
-
-    <button type="submit" class="rounded-button">
-      ENTRAR
-    </button>
-  </form>
-
-   <form class="login-inputs" (submit)="irParaCadastro(); $event.preventDefault()">
- <button type="submit" class="rounded-button">
-      CRIAR CONTA
-    </button>
-   </form>
-
-  <hr class="divider" />
-
-  <div class="social-login">
-    <img src="assets/google-icon.png" alt="Google" />
-    <img src="assets/facebook-logo-facebook-icon-transparent-free-png.webp" alt="Facebook" />
   </div>
-</main>
+</div>
