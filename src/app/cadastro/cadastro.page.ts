@@ -15,10 +15,10 @@ export class CadastroPage {
   }
 
   voltarLogin() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/login']);
   }
 
   voltarHome() {
-    this.router.navigate(['/menu']);
+    this.router.navigate(['/home']);
   }
 }
