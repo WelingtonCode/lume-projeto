@@ -11,6 +11,6 @@ export class EquipePage {
   constructor(private router: Router) {}
 
   voltarMenu() {
-    this.router.navigate(['/menu']);
+    this.router.navigate(['/home']);
   }
 }

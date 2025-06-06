@@ -1,18 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';  // <-- Importa Router
 import { TmdbService } from '../services/tmdb.service';
+import { FavoritosService, Filme } from '../favoritos/favoritos.service'; // ajuste caminho se precisar
 
-interface Filme {
-  titulo: string;
-  imagem?: string;
-  descricao?: string;
-  lancamento?: string;
-  nota?: number;
-}
-
-// Defining the TmdbMovie interface here
 interface TmdbMovie {
   title: string;
   poster_path: string;
@@ -48,7 +40,11 @@ export class HomePage implements OnInit {
   menuAberto = false;
   filmeExpandido: Filme | null = null;
 
-  constructor(private tmdbService: TmdbService) {}
+  constructor(
+    private tmdbService: TmdbService,
+    private favoritosService: FavoritosService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.carregarDetalhesFilmes();
@@ -62,19 +58,31 @@ export class HomePage implements OnInit {
     this.filmeExpandido = this.filmeExpandido === filme ? null : filme;
   }
 
-  // Load random movies for each category
+  toggleFavorito(filme: Filme) {
+    filme.favorito = !filme.favorito;
+
+    if (filme.favorito) {
+      this.favoritosService.adicionar(filme);
+      this.router.navigate(['/favoritos']); // redireciona pra favoritos ao favoritar
+    } else {
+      this.favoritosService.remover(filme);
+    }
+
+    console.log(`${filme.titulo} favorito: ${filme.favorito}`);
+  }
+
   async carregarDetalhesFilmes() {
     for (const categoria of this.categorias) {
-      const randomPage = Math.floor(Math.random() * 10) + 1; // Random page (1-10)
+      const randomPage = Math.floor(Math.random() * 10) + 1;
       const detalhes: any = await this.tmdbService.getMoviesByCategory(categoria.genreId, randomPage).toPromise();
 
-      // Update the category's movie list with random TMDb data
       categoria.filmes = detalhes.results.map((filme: TmdbMovie) => ({
         titulo: filme.title,
         imagem: filme.poster_path ? `https://image.tmdb.org/t/p/w500${filme.poster_path}` : 'assets/default-movie.png',
         descricao: filme.overview || 'Descrição não disponível.',
         lancamento: filme.release_date || '',
-        nota: filme.vote_average || 0
+        nota: filme.vote_average || 0,
+        favorito: this.favoritosService.estaFavorito(filme.title), // sincroniza favorito com o serviço
       }));
     }
   }

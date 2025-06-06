@@ -1,0 +1,36 @@
+<!-- Sidebar lateral direita -->
+<nav [class.active]="menuAberto" class="sidebar sidebar-right">
+  <ul>
+    <li><a routerLink="/login" (click)="toggleMenu()">Início</a></li>
+    <li><a routerLink="/home" (click)="toggleMenu()">Filmes</a></li>
+    <li><a routerLink="/favoritos" (click)="toggleMenu()">Favoritos</a></li>
+    <li><a routerLink="/equipe" (click)="toggleMenu()">Desenvolvedores</a></li>
+  </ul>
+</nav>
+
+<!-- Sobreposição para fechar menu ao clicar fora -->
+<div [class.active]="menuAberto" class="overlay" (click)="toggleMenu()"></div>
+
+<!-- Cabeçalho fixo -->
+<header class="header">
+  <div class="toolbar-custom">
+    <div class="app-title">
+      <h1>Favoritos</h1>
+    </div>
+    <div class="menu-toggle" (click)="toggleMenu()">☰</div>
+  </div>
+</header>
+
+<!-- Conteúdo da página de favoritos -->
+<main class="conteudo">
+  <div *ngIf="filmesFavoritos.length === 0" class="mensagem-vazia">
+    Nenhum filme favoritado ainda.
+  </div>
+
+  <div class="filmes-grid">
+    <div *ngFor="let filme of filmesFavoritos" class="filme-card">
+      <img [src]="filme.imagem" [alt]="filme.titulo" />
+      <h3>{{ filme.titulo }}</h3>
+    </div>
+  </div>
+</main>
