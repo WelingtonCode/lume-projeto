@@ -10,7 +10,7 @@
 
 .main-content {
   margin-top: calc(var(--header-height) + var(--safe-area-top));
-  padding-top: 1rem; 
+  padding-top: 1rem;
   min-height: calc(100vh - var(--header-height) - var(--safe-area-top));
 }
 
@@ -52,12 +52,12 @@
 
 /* Ajuste base para ion-toolbar: logo à esquerda, menu hamburger à direita */
 .toolbar-custom {
-color: dark;
+  color: dark;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 1rem;
-  height: 56px; 
+  height: 56px;
   box-sizing: border-box;
   width: 100%;
   max-width: 100vw;
@@ -71,7 +71,8 @@ color: dark;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: calc(100vw - 80px); /* Considera o espaço do botão de menu */
+  max-width: calc(100vw - 80px);
+  /* Considera o espaço do botão de menu */
   padding-right: 10px;
 }
 
@@ -79,7 +80,8 @@ color: dark;
   margin: 0;
   font-weight: 700;
   color: #f5d76e;
-  font-size: clamp(1rem, 4vw, 1.5rem); /* Tamanho responsivo */
+  font-size: clamp(1rem, 4vw, 1.5rem);
+  /* Tamanho responsivo */
   user-select: none;
   line-height: 1.2;
 }
@@ -106,7 +108,7 @@ color: dark;
   padding-top: 4rem;
   transition: right 0.3s ease;
   z-index: 1050;
-  box-shadow: -2px 0 5px rgba(0,0,0,0.7);
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.7);
 }
 
 .sidebar.active {
@@ -180,7 +182,8 @@ color: dark;
   padding-bottom: 0.5rem;
   scrollbar-width: thin;
   scrollbar-color: #f5d76e transparent;
-  -webkit-overflow-scrolling: touch; /* Melhora no iOS */
+  -webkit-overflow-scrolling: touch;
+  /* Melhora no iOS */
 }
 
 .filmes-scroll::-webkit-scrollbar {
@@ -246,7 +249,7 @@ color: dark;
   align-items: center;
   z-index: 9999;
   padding: 1rem;
-  overflow-y: auto; 
+  overflow-y: auto;
   padding-top: calc(var(--header-height) + var(--safe-area-top));
   padding-bottom: var(--safe-area-bottom);
 }
@@ -390,15 +393,15 @@ color: dark;
   .header {
     height: calc(50px + env(safe-area-inset-top));
   }
-  
+
   .toolbar-custom {
     height: 50px;
   }
-  
+
   .app-title h1 {
     font-size: 1rem;
   }
-  
+
   .menu-toggle {
     font-size: 1.5rem;
   }
@@ -408,15 +411,15 @@ color: dark;
   :root {
     --header-height: 48px;
   }
-  
+
   .toolbar-custom {
     padding: 0 0.5rem;
   }
-  
+
   .filme-card {
     width: 110px;
   }
-  
+
   .modal-filme-poster {
     width: 100%;
   }
@@ -425,7 +428,7 @@ color: dark;
 
 .favorito-icone {
   font-size: 24px;
-  color: gold;
+  color: rgb(0, 153, 255);
   position: absolute;
   top: 8px;
   right: 8px;
@@ -433,7 +436,12 @@ color: dark;
   user-select: none;
   z-index: 2;
 }
+
 .filme-card {
   position: relative;
 }
 
+
+.favorito-ativo {
+  color: gold; // cor quando É favorito
+}

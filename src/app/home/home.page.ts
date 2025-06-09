@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';  // <-- Importa Router
+import { RouterModule } from '@angular/router';
 import { TmdbService } from '../services/tmdb.service';
-import { FavoritosService, Filme } from '../favoritos/favoritos.service'; // ajuste caminho se precisar
+import { FavoritosService, Filme } from '../favoritos/favoritos.service';
 
 interface TmdbMovie {
   title: string;
@@ -43,7 +43,7 @@ export class HomePage implements OnInit {
   constructor(
     private tmdbService: TmdbService,
     private favoritosService: FavoritosService,
-    private router: Router
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
@@ -58,17 +58,27 @@ export class HomePage implements OnInit {
     this.filmeExpandido = this.filmeExpandido === filme ? null : filme;
   }
 
-  toggleFavorito(filme: Filme) {
+  async toggleFavorito(filme: Filme) {
     filme.favorito = !filme.favorito;
 
     if (filme.favorito) {
       this.favoritosService.adicionar(filme);
-      this.router.navigate(['/favoritos']); // redireciona pra favoritos ao favoritar
+      await this.exibirToast('Adicionado aos favoritos');
     } else {
       this.favoritosService.remover(filme);
+      await this.exibirToast('Removido dos favoritos');
     }
 
     console.log(`${filme.titulo} favorito: ${filme.favorito}`);
+  }
+
+  async exibirToast(mensagem: string) {
+    const toast = await this.toastController.create({
+      message: mensagem,
+      duration: 1500,
+      color: 'primary',
+    });
+    await toast.present();
   }
 
   async carregarDetalhesFilmes() {
@@ -82,7 +92,7 @@ export class HomePage implements OnInit {
         descricao: filme.overview || 'Descrição não disponível.',
         lancamento: filme.release_date || '',
         nota: filme.vote_average || 0,
-        favorito: this.favoritosService.estaFavorito(filme.title), // sincroniza favorito com o serviço
+        favorito: this.favoritosService.estaFavorito(filme.title),
       }));
     }
   }
