@@ -19,6 +19,15 @@ interface Categoria {
   genreId: number;
 }
 
+interface Revisao {
+  imagem: string;
+  texto: string;
+  estrelas: number;
+  likes: number;
+  autorNome: string;
+  autorFoto: string;
+}
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -39,6 +48,25 @@ export class HomePage implements OnInit {
 
   menuAberto = false;
   filmeExpandido: Filme | null = null;
+
+  revisoes: Revisao[] = [
+    {
+      imagem: 'assets/octodad.jpg',
+      texto: 'Eu achei a história bem fofinha, eu gostei.',
+      estrelas: 6,
+      likes: 0,
+      autorNome: 'Pedro Gabriel',
+      autorFoto: 'assets/avatar-pedro.jpg',
+    },
+    {
+      imagem: 'assets/scott-pilgrim.jpg',
+      texto: 'Acho fraquinho demais, curto muito esses jogos de andar e socar todo mundo mas esse aqui não...',
+      estrelas: 4,
+      likes: 0,
+      autorNome: 'Pedro Gabriel',
+      autorFoto: 'assets/avatar-pedro.jpg',
+    },
+  ];
 
   constructor(
     private tmdbService: TmdbService,
@@ -84,11 +112,15 @@ export class HomePage implements OnInit {
   async carregarDetalhesFilmes() {
     for (const categoria of this.categorias) {
       const randomPage = Math.floor(Math.random() * 10) + 1;
-      const detalhes: any = await this.tmdbService.getMoviesByCategory(categoria.genreId, randomPage).toPromise();
+      const detalhes: any = await this.tmdbService
+        .getMoviesByCategory(categoria.genreId, randomPage)
+        .toPromise();
 
       categoria.filmes = detalhes.results.map((filme: TmdbMovie) => ({
         titulo: filme.title,
-        imagem: filme.poster_path ? `https://image.tmdb.org/t/p/w500${filme.poster_path}` : 'assets/default-movie.png',
+        imagem: filme.poster_path
+          ? `https://image.tmdb.org/t/p/w500${filme.poster_path}`
+          : 'assets/default-movie.png',
         descricao: filme.overview || 'Descrição não disponível.',
         lancamento: filme.release_date || '',
         nota: filme.vote_average || 0,

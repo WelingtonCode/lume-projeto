@@ -1,17 +1,18 @@
+<!-- home.page.html -->
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 </head>
 
+<!-- Menu lateral -->
 <nav [class.active]="menuAberto" class="sidebar sidebar-right">
   <ul>
-    <li><a routerLink="/login" (click)="toggleMenu()">Início</a></li>
-    <li><a routerLink="/home" (click)="toggleMenu()">Filmes</a></li>
-    <li><a routerLink="/favoritos" (click)="toggleMenu()">Favoritos</a></li>
+    <li><a routerLink="/" (click)="toggleMenu()">Buscar</a></li>
+    <li><a routerLink="/favoritos" (click)="toggleMenu()">Notícias</a></li>
     <li><a routerLink="/equipe" (click)="toggleMenu()">Desenvolvedores</a></li>
   </ul>
 </nav>
 
-<!-- Sobreposição para fechar menu ao clicar fora -->
+<!-- Overlay -->
 <div [class.active]="menuAberto" class="overlay" (click)="toggleMenu()"></div>
 
 <!-- Cabeçalho -->
@@ -24,24 +25,24 @@
   </div>
 </header>
 
+<!-- Conteúdo principal -->
 <div class="main-content">
+  <!-- Categorias -->
   <section *ngFor="let categoria of categorias" class="categoria-section">
     <h2 class="categoria-titulo">{{ categoria.nome }}</h2>
     <div class="filmes-scroll">
       <article *ngFor="let filme of categoria.filmes | slice:0:8" class="filme-card">
-        <!-- Ícone de favorito no canto superior direito -->
         <div class="favorito-icone" (click)="toggleFavorito(filme); $event.stopPropagation()">
           {{ filme.favorito ? '★' : '☆' }}
         </div>
-
-        <!-- Imagem e título com expansão -->
         <img [src]="filme.imagem" [alt]="filme.titulo" class="filme-poster" (click)="toggleFilmeExpandido(filme)" />
         <h3 (click)="toggleFilmeExpandido(filme)">{{ filme.titulo }}</h3>
       </article>
     </div>
   </section>
 
-  <!-- Modal expandido do filme -->
+
+  <!-- Modal de filme -->
   <div class="modal-filme" *ngIf="filmeExpandido" (click)="toggleFilmeExpandido(null)">
     <div class="modal-filme-conteudo" (click)="$event.stopPropagation()">
       <img [src]="filmeExpandido.imagem" [alt]="filmeExpandido.titulo" class="modal-filme-poster" />
@@ -50,12 +51,27 @@
         <p><strong>Descrição:</strong> {{ filmeExpandido.descricao }}</p>
         <p><strong>Lançamento:</strong> {{ filmeExpandido.lancamento }}</p>
         <p>
-          <strong>Nota:</strong>
-          {{ filmeExpandido.nota }}
+          <strong>Nota:</strong> {{ filmeExpandido.nota }}
           <span class="nota-barra" [style.width.%]="(filmeExpandido?.nota ?? 0) * 10"></span>
         </p>
         <button (click)="toggleFilmeExpandido(null)" class="btn-fechar">Fechar</button>
       </div>
     </div>
   </div>
+
+  <!-- Revisões Recentes -->
+  
 </div>
+
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb" class="breadcrumb-container">
+  <a href="/login">⌂</a>
+  <span class="separator"></span>
+  <a href="/home">🎬</a>
+  <span class="separator"></span>
+  <a href="/favoritos">★</a>
+  <span class="separator"></span>
+  <a href="/">📰</a>
+  <span class="separator"></span>
+  <a href="/home">👤</a>
+</nav>

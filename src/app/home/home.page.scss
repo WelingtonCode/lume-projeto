@@ -445,3 +445,69 @@
 .favorito-ativo {
   color: gold; // cor quando É favorito
 }
+
+
+
+
+
+.breadcrumb-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #1e1e1e;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  font-size: 1.5rem;
+  z-index: 1000;
+  border-top: 1px solid #444;
+}
+
+.breadcrumb-container a {
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+  transition: background-color 0.2s ease;
+  border-radius: 8px;
+}
+
+.breadcrumb-container a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.separator {
+  display: none; /* Ocultado por padrão (melhor sem separador em mobile) */
+}
+
+/* Responsivo para tablets e desktops */
+@media (min-width: 600px) {
+  .breadcrumb-container {
+    justify-content: center;
+    gap: 1.5rem;
+    font-size: 1.25rem;
+  }
+
+  .separator {
+    display: inline;
+    color: #888;
+  }
+}
+
+/* Telas maiores ainda (opcional) */
+@media (min-width: 1024px) {
+  .breadcrumb-container {
+    font-size: 1.2rem;
+    padding: 12px 0;
+  }
+}
+
+
+
+
+
+
+
+
+
