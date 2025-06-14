@@ -31,6 +31,11 @@ export const routes: Routes = [
     loadComponent: () => 
       import('./favoritos/favoritos.page').then( m => m.FavoritosPage)
   },
+  {
+    path: 'noticias',
+    loadComponent: () => 
+      import('./noticias/noticias.page').then( m => m.NoticiasPage)
+  },
 ];
 
 

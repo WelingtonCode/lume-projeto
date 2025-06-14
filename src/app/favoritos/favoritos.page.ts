@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';  // <-- Adicionado aqui
+import { RouterModule } from '@angular/router';
 import { FavoritosService } from './favoritos.service';
 
 interface Filme {
@@ -16,21 +16,30 @@ interface Filme {
 @Component({
   selector: 'app-favoritos',
   standalone: true,
-  imports: [IonicModule, CommonModule, RouterModule],  // <-- RouterModule adicionado aqui
+  imports: [IonicModule, CommonModule, RouterModule],
   templateUrl: './favoritos.page.html',
   styleUrls: ['./favoritos.page.scss'],
 })
 export class FavoritosPage implements OnInit {
   filmesFavoritos: Filme[] = [];
-  menuAberto = false; // ✅ ADICIONADO
+  menuAberto = false;
 
-  constructor(private favoritosService: FavoritosService) { }
+  constructor(private favoritosService: FavoritosService) {}
 
   ngOnInit() {
-    this.filmesFavoritos = this.favoritosService.listar();
+    this.carregarFavoritos();
   }
 
   toggleMenu() {
     this.menuAberto = !this.menuAberto;
+  }
+
+  carregarFavoritos() {
+    this.filmesFavoritos = this.favoritosService.listar();
+  }
+
+  removerFavorito(filme: Filme) {
+    this.favoritosService.remover(filme);
+    this.carregarFavoritos(); // Atualiza a lista
   }
 }

@@ -31,6 +31,22 @@
     <div *ngFor="let filme of filmesFavoritos" class="filme-card">
       <img [src]="filme.imagem" [alt]="filme.titulo" />
       <h3>{{ filme.titulo }}</h3>
+      <button (click)="removerFavorito(filme)" class="remover-btn">
+        Remove
+      </button>
     </div>
   </div>
 </main>
+
+<nav aria-label="breadcrumb" class="breadcrumb-container">
+  <a href="/login">🏠</a>
+  <span class="separator"></span>
+  <a href="/home">🎬</a>
+  <span class="separator"></span>
+  <a href="/favoritos">⭐</a>
+  <span class="separator"></span>
+  <a href="/noticias">📰</a>
+  <span class="separator"></span>
+  <a href="/home">👤</a>
+</nav>
+

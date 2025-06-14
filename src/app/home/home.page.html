@@ -7,7 +7,6 @@
 <nav [class.active]="menuAberto" class="sidebar sidebar-right">
   <ul>
     <li><a routerLink="/" (click)="toggleMenu()">Buscar</a></li>
-    <li><a routerLink="/favoritos" (click)="toggleMenu()">Notícias</a></li>
     <li><a routerLink="/equipe" (click)="toggleMenu()">Desenvolvedores</a></li>
   </ul>
 </nav>
@@ -65,13 +64,13 @@
 
 <!-- Breadcrumb -->
 <nav aria-label="breadcrumb" class="breadcrumb-container">
-  <a href="/login">⌂</a>
+  <a href="/login">🏠</a>
   <span class="separator"></span>
   <a href="/home">🎬</a>
   <span class="separator"></span>
-  <a href="/favoritos">★</a>
+  <a href="/favoritos">⭐</a>
   <span class="separator"></span>
-  <a href="/">📰</a>
+  <a href="/noticias">📰</a>
   <span class="separator"></span>
   <a href="/home">👤</a>
 </nav>

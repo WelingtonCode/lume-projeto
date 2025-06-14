@@ -1,0 +1,55 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+</head>
+
+<!-- Menu lateral -->
+<nav [class.active]="menuAberto" class="sidebar sidebar-right">
+  <ul>
+    <li><a routerLink="/" (click)="toggleMenu()">Buscar</a></li>
+    <li><a routerLink="/equipe" (click)="toggleMenu()">Desenvolvedores</a></li>
+  </ul>
+</nav>
+
+<!-- Overlay -->
+<div [class.active]="menuAberto" class="overlay" (click)="toggleMenu()"></div>
+
+<!-- Cabeçalho -->
+<header class="header">
+  <div class="toolbar-custom">
+    <div class="app-title">
+      <h1>Noticias</h1>
+    </div>
+    <div class="menu-toggle" (click)="toggleMenu()">☰</div>
+  </div>
+</header>
+
+<!-- Conteúdo principal -->
+<div class="conteudo">
+  <section class="noticias-grid">
+    <article *ngFor="let noticia of noticias" class="noticia-card">
+      <img [src]="noticia.imagem" [alt]="noticia.titulo" />
+      <h3>{{ noticia.titulo }}</h3>
+      <p>{{ noticia.descricao }}</p>
+      <a
+        class="trailer-link"
+        [href]="noticia.trailerUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        >▶ Assistir trailer</a
+      >
+    </article>
+  </section>
+</div>
+
+<!-- Breadcrumb -->
+<nav aria-label="breadcrumb" class="breadcrumb-container">
+  <a href="/login">🏠</a>
+  <span class="separator"></span>
+  <a href="/home">🎬</a>
+  <span class="separator"></span>
+  <a href="/favoritos">⭐</a>
+  <span class="separator"></span>
+  <a href="/noticias">📰</a>
+  <span class="separator"></span>
+  <a href="/home">👤</a>
+</nav>

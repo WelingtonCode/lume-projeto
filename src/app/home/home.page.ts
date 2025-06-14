@@ -48,6 +48,7 @@ export class HomePage implements OnInit {
 
   menuAberto = false;
   filmeExpandido: Filme | null = null;
+  temaEscuroAtivo = false; // ✅ tema
 
   revisoes: Revisao[] = [
     {
@@ -126,6 +127,18 @@ export class HomePage implements OnInit {
         nota: filme.vote_average || 0,
         favorito: this.favoritosService.estaFavorito(filme.title),
       }));
+    }
+  }
+
+  // ✅ Alternar tema claro/escuro
+  alternarTema() {
+    this.temaEscuroAtivo = !this.temaEscuroAtivo;
+    const body = document.body;
+
+    if (this.temaEscuroAtivo) {
+      body.classList.add('dark-theme');
+    } else {
+      body.classList.remove('dark-theme');
     }
   }
 }

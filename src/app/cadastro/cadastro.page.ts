@@ -11,7 +11,7 @@ export class CadastroPage {
 
   cadastrar() {
     alert('Cadastro realizado com sucesso!');
-    this.router.navigate(['/home']);
+    this.router.navigate(['/login']);
   }
 
   voltarLogin() {

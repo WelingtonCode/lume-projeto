@@ -505,6 +505,44 @@
 
 
 
+/* Tema escuro */
+.dark-theme {
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+.dark-theme .header,
+.dark-theme .breadcrumb-container {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.dark-theme .filme-card {
+  background-color: #2a2a2a;
+  color: white;
+}
+
+.dark-theme .modal-filme-conteudo {
+  background-color: #1c1c1c;
+}
+
+/* Botão de alternância de tema */
+.tema-toggle {
+  margin-right: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  background-color: #eeeeee;
+  cursor: pointer;
+}
+
+.dark-theme .tema-toggle {
+  background-color: #333;
+  color: white;
+}
+
+
+
 
 
 
