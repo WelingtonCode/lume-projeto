@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-import { TmdbService } from '../services/tmdb.service';
+import { TmdbService, TmdbMovie, TmdbResponse } from '../services/tmdb.service'; // IMPORTAR tipos do serviço
 import { lastValueFrom } from 'rxjs';
 
 interface Noticia {
@@ -11,14 +11,6 @@ interface Noticia {
   descricao: string;
   imagem: string;
   trailerUrl: string;
-}
-
-interface TmdbPopularResponse {
-  results: Array<{
-    title: string;
-    overview: string;
-    poster_path: string | null;
-  }>;
 }
 
 @Component({
@@ -29,10 +21,10 @@ interface TmdbPopularResponse {
   imports: [CommonModule, FormsModule, IonicModule, RouterModule]
 })
 export class NoticiasPage implements OnInit {
-  menuAberto = false;  // CONTROLE DO MENU LATERAL
+  menuAberto = false;
   noticias: Noticia[] = [];
 
-  constructor(private tmdbService: TmdbService) {}
+  constructor(private tmdbService: TmdbService) { }
 
   async ngOnInit() {
     await this.carregarNoticias();
@@ -44,8 +36,8 @@ export class NoticiasPage implements OnInit {
 
   async carregarNoticias() {
     try {
-      const resposta: TmdbPopularResponse = await lastValueFrom(this.tmdbService.getPopularMovies());
-      this.noticias = resposta.results.slice(0, 10).map(filme => ({
+      const resposta: TmdbResponse = await lastValueFrom(this.tmdbService.getPopularMovies());
+      this.noticias = resposta.results.slice(0, 10).map((filme: TmdbMovie) => ({
         titulo: filme.title,
         descricao: filme.overview || 'Sem descrição.',
         imagem: filme.poster_path

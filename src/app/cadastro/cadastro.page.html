@@ -12,33 +12,71 @@
   <form class="login-inputs" (submit)="cadastrar(); $event.preventDefault()">
     <div class="input-group">
       <label for="nome">Nome completo</label>
-      <input id="nome" type="text" placeholder="Digite seu nome" required />
+      <input
+        id="nome"
+        type="text"
+        placeholder="Digite seu nome"
+        required
+        [(ngModel)]="usuario"
+        name="usuario"
+      />
     </div>
 
     <div class="input-group">
       <label for="email">E-mail</label>
-      <input id="email" type="email" placeholder="Digite seu e-mail" required />
+      <input
+        id="email"
+        type="email"
+        placeholder="Digite seu e-mail"
+        required
+        [(ngModel)]="email"
+        name="email"
+      />
     </div>
 
     <div class="input-group">
       <label for="senha">Senha</label>
-      <input id="senha" type="password" placeholder="Crie uma senha" required />
+      <input
+        id="senha"
+        type="password"
+        placeholder="Crie uma senha"
+        required
+        [(ngModel)]="senha"
+        name="senha"
+      />
     </div>
 
     <div class="input-group">
       <label for="confirmar">Confirmar Senha</label>
-      <input id="confirmar" type="password" placeholder="Confirme sua senha" required />
+      <input
+        id="confirmar"
+        type="password"
+        placeholder="Confirme sua senha"
+        required
+        [(ngModel)]="confirmarSenha"
+        name="confirmarSenha"
+      />
     </div>
 
-    <button type="submit" class="rounded-button">
-      CADASTRAR
-    </button>
+    <div class="input-group">
+      <label for="telefone">Telefone</label>
+      <input
+        id="telefone"
+        type="tel"
+        placeholder="Digite seu telefone"
+        required
+        [(ngModel)]="telefone"
+        name="telefone"
+      />
+    </div>
+
+    <button type="submit" class="rounded-button">CADASTRAR</button>
   </form>
 
   <hr class="divider" />
 
   <div class="login-links">
-    <button class="header-icon" aria-label="ja tem conta" (click)="voltarLogin()">
+    <button class="header-icon" aria-label="já tem conta" (click)="voltarLogin()">
       &#8592;
     </button>
   </div>
