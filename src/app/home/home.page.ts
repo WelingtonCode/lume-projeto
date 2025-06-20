@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TmdbService } from '../services/tmdb.service';
 import { FavoritosService, Filme } from '../favoritos/favoritos.service';
+import { Router } from '@angular/router'; // Import necessário para redirecionamento
 
 interface TmdbMovie {
   title: string;
@@ -48,7 +49,7 @@ export class HomePage implements OnInit {
 
   menuAberto = false;
   filmeExpandido: Filme | null = null;
-  temaEscuroAtivo = false; // ✅ tema
+  temaEscuroAtivo = false;
 
   revisoes: Revisao[] = [
     {
@@ -72,7 +73,8 @@ export class HomePage implements OnInit {
   constructor(
     private tmdbService: TmdbService,
     private favoritosService: FavoritosService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private router: Router // ✅ Adicionado
   ) {}
 
   ngOnInit() {
@@ -130,7 +132,6 @@ export class HomePage implements OnInit {
     }
   }
 
-  // ✅ Alternar tema claro/escuro
   alternarTema() {
     this.temaEscuroAtivo = !this.temaEscuroAtivo;
     const body = document.body;
@@ -140,5 +141,12 @@ export class HomePage implements OnInit {
     } else {
       body.classList.remove('dark-theme');
     }
+  }
+
+  // ✅ Função para sair da conta
+  logout() {
+    localStorage.clear(); // Limpa dados do usuário
+    sessionStorage.clear(); // Caso tenha dados em session também
+    this.router.navigate(['/login']); // Redireciona para tela de login
   }
 }

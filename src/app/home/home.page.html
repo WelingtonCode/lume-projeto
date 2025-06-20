@@ -40,7 +40,6 @@
     </div>
   </section>
 
-
   <!-- Modal de filme -->
   <div class="modal-filme" *ngIf="filmeExpandido" (click)="toggleFilmeExpandido(null)">
     <div class="modal-filme-conteudo" (click)="$event.stopPropagation()">
@@ -57,12 +56,9 @@
       </div>
     </div>
   </div>
-
-  <!-- Revisões Recentes -->
-  
 </div>
 
-<!-- Breadcrumb -->
+<!-- Breadcrumb com ícones -->
 <nav aria-label="breadcrumb" class="breadcrumb-container">
   <a href="/login">🏠</a>
   <span class="separator"></span>
@@ -72,5 +68,18 @@
   <span class="separator"></span>
   <a href="/noticias">📰</a>
   <span class="separator"></span>
-  <a href="/home">👤</a>
+
+  <!-- Botão com popover de logout -->
+  <a id="user-button" class="user-button">👤</a>
+
+  <ion-popover trigger="user-button" triggerAction="click" showBackdrop="false">
+    <ng-template>
+      <ion-list>
+        <ion-item button (click)="logout()">
+          <ion-icon slot="start" name="log-out-outline"></ion-icon>
+          <ion-label>Sair da conta</ion-label>
+        </ion-item>
+      </ion-list>
+    </ng-template>
+  </ion-popover>
 </nav>
