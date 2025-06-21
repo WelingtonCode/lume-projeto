@@ -1,18 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { TmdbService } from '../services/tmdb.service';
+import { RouterModule, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { TmdbService, TmdbResponse, TmdbMovie } from '../services/tmdb.service';
 import { FavoritosService, Filme } from '../favoritos/favoritos.service';
-import { Router } from '@angular/router'; // Import necessário para redirecionamento
-
-interface TmdbMovie {
-  title: string;
-  poster_path: string;
-  overview: string;
-  release_date: string;
-  vote_average: number;
-}
 
 interface Categoria {
   nome: string;
@@ -20,19 +12,10 @@ interface Categoria {
   genreId: number;
 }
 
-interface Revisao {
-  imagem: string;
-  texto: string;
-  estrelas: number;
-  likes: number;
-  autorNome: string;
-  autorFoto: string;
-}
-
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [IonicModule, CommonModule, RouterModule],
+  imports: [IonicModule, CommonModule, RouterModule, FormsModule],
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
@@ -51,30 +34,15 @@ export class HomePage implements OnInit {
   filmeExpandido: Filme | null = null;
   temaEscuroAtivo = false;
 
-  revisoes: Revisao[] = [
-    {
-      imagem: 'assets/octodad.jpg',
-      texto: 'Eu achei a história bem fofinha, eu gostei.',
-      estrelas: 6,
-      likes: 0,
-      autorNome: 'Pedro Gabriel',
-      autorFoto: 'assets/avatar-pedro.jpg',
-    },
-    {
-      imagem: 'assets/scott-pilgrim.jpg',
-      texto: 'Acho fraquinho demais, curto muito esses jogos de andar e socar todo mundo mas esse aqui não...',
-      estrelas: 4,
-      likes: 0,
-      autorNome: 'Pedro Gabriel',
-      autorFoto: 'assets/avatar-pedro.jpg',
-    },
-  ];
+  // Para busca
+  termoBusca: string = '';
+  resultadosBusca: Filme[] = [];
 
   constructor(
     private tmdbService: TmdbService,
     private favoritosService: FavoritosService,
     private toastController: ToastController,
-    private router: Router // ✅ Adicionado
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -99,8 +67,6 @@ export class HomePage implements OnInit {
       this.favoritosService.remover(filme);
       await this.exibirToast('Removido dos favoritos');
     }
-
-    console.log(`${filme.titulo} favorito: ${filme.favorito}`);
   }
 
   async exibirToast(mensagem: string) {
@@ -115,20 +81,51 @@ export class HomePage implements OnInit {
   async carregarDetalhesFilmes() {
     for (const categoria of this.categorias) {
       const randomPage = Math.floor(Math.random() * 10) + 1;
-      const detalhes: any = await this.tmdbService
+      const detalhes = await this.tmdbService
         .getMoviesByCategory(categoria.genreId, randomPage)
         .toPromise();
 
-      categoria.filmes = detalhes.results.map((filme: TmdbMovie) => ({
-        titulo: filme.title,
-        imagem: filme.poster_path
-          ? `https://image.tmdb.org/t/p/w500${filme.poster_path}`
-          : 'assets/default-movie.png',
-        descricao: filme.overview || 'Descrição não disponível.',
-        lancamento: filme.release_date || '',
-        nota: filme.vote_average || 0,
-        favorito: this.favoritosService.estaFavorito(filme.title),
-      }));
+      if (detalhes && detalhes.results) {
+        categoria.filmes = detalhes.results.map((filme: TmdbMovie) => ({
+          titulo: filme.title,
+          imagem: filme.poster_path
+            ? `https://image.tmdb.org/t/p/w500${filme.poster_path}`
+            : 'assets/default-movie.png',
+          descricao: filme.overview || 'Descrição não disponível.',
+          lancamento: filme.release_date || '',
+          nota: filme.vote_average || 0,
+          favorito: this.favoritosService.estaFavorito(filme.title),
+        }));
+      }
+    }
+  }
+
+  async buscarFilmes() {
+    if (!this.termoBusca.trim()) {
+      this.resultadosBusca = [];
+      return;
+    }
+
+    try {
+      const resposta = await this.tmdbService
+        .getMovieFullDataByTitle(this.termoBusca)
+        .toPromise();
+
+      if (resposta && resposta.results) {
+        this.resultadosBusca = resposta.results.map((filme: TmdbMovie) => ({
+          titulo: filme.title,
+          imagem: filme.poster_path
+            ? `https://image.tmdb.org/t/p/w500${filme.poster_path}`
+            : 'assets/default-movie.png',
+          descricao: filme.overview || 'Descrição não disponível.',
+          lancamento: filme.release_date || '',
+          nota: filme.vote_average || 0,
+          favorito: this.favoritosService.estaFavorito(filme.title),
+        }));
+      }
+    } catch (error) {
+      console.error('Erro ao buscar filmes:', error);
+      this.resultadosBusca = [];
     }
   }
 
@@ -143,10 +140,9 @@ export class HomePage implements OnInit {
     }
   }
 
-  // ✅ Função para sair da conta
   logout() {
-    localStorage.clear(); // Limpa dados do usuário
-    sessionStorage.clear(); // Caso tenha dados em session também
-    this.router.navigate(['/login']); // Redireciona para tela de login
+    localStorage.clear();
+    sessionStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

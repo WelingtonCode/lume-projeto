@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" icon="arrow-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Buscar Filmes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="buscar-content" fullscreen>
+  <ion-searchbar
+    [(ngModel)]="termoBusca"
+    (ionChange)="buscarFilmes()"
+    debounce="500"
+    placeholder="Digite o nome do filme"
+    showCancelButton="focus"
+  ></ion-searchbar>
+
+  <div *ngIf="resultadosBusca.length === 0 && termoBusca.trim() !== ''" class="sem-resultados">
+    Nenhum filme encontrado para "{{ termoBusca }}"
+  </div>
+
+  <ion-list *ngIf="resultadosBusca.length > 0">
+    <ion-item
+      *ngFor="let filme of resultadosBusca"
+      (click)="verDetalhes(filme)"
+      button
+      detail
+    >
+      <ion-thumbnail slot="start">
+        <img [src]="filme.imagem" [alt]="filme.titulo" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ filme.titulo }}</h2>
+        <p>{{ filme.lancamento | date:'dd/MM/yyyy' }}</p>
+        <p class="descricao">{{ filme.descricao }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<nav aria-label="breadcrumb" class="breadcrumb-container">
+  <a href="/login">🏠</a>
+  <span class="separator"></span>
+  <a href="/home">🎬</a>
+  <span class="separator"></span>
+  <a href="/favoritos">⭐</a>
+  <span class="separator"></span>
+  <a href="/noticias">📰</a>
+  <span class="separator"></span>
+
+  <!-- Botão com popover de logout -->
+  <a id="user-button" class="user-button">👤</a>
+
+  <ion-popover trigger="user-button" triggerAction="click" showBackdrop="false">
+    <ng-template>
+      <ion-list>
+        <ion-item button (click)="logout()">
+          <ion-icon slot="start" name="log-out-outline"></ion-icon>
+          <ion-label>Sair da conta</ion-label>
+        </ion-item>
+      </ion-list>
+    </ng-template>
+  </ion-popover>
+</nav>
