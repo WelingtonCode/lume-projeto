@@ -43,7 +43,7 @@ export class HomePage implements OnInit {
     private favoritosService: FavoritosService,
     private toastController: ToastController,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.carregarDetalhesFilmes();

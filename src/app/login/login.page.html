@@ -12,34 +12,24 @@
   <form class="login-inputs" (submit)="irParaHome(); $event.preventDefault()">
     <div class="input-group">
       <label for="email">E-mail</label>
-      <input id="email" type="email" placeholder="Digite seu e-mail" required />
+      <input id="email" type="email" placeholder="Digite seu e-mail" required [(ngModel)]="email" name="email" />
     </div>
 
     <div class="input-group">
       <label for="senha">Senha</label>
-      <input id="senha" type="password" placeholder="Digite sua senha" required />
+      <input id="senha" type="password" placeholder="Digite sua senha" required [(ngModel)]="senha" name="senha" />
     </div>
+    <hr class="divider" />
 
     <div class="login-links">
       <a routerLink="#">Esqueceu a senha?</a>
     </div>
 
-
-    <button type="submit" class="rounded-button">
-      ENTRAR
-    </button>
+    <button type="submit" class="rounded-button">ENTRAR</button>
   </form>
 
-   <form class="login-inputs" (submit)="irParaCadastro(); $event.preventDefault()">
- <button type="submit" class="rounded-button">
-      CRIAR CONTA
-    </button>
-   </form>
+  <form class="login-inputs" (submit)="irParaCadastro(); $event.preventDefault()">
+    <button type="submit" class="rounded-button">CRIAR CONTA</button>
+  </form>
 
-  <hr class="divider" />
-
-  <div class="social-login">
-    <img src="assets/google-icon.png" alt="Google" />
-    <img src="assets/facebook-logo-facebook-icon-transparent-free-png.webp" alt="Facebook" />
-  </div>
 </main>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, AlertController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 
 import { getDatabase, ref, set } from 'firebase/database';
@@ -25,10 +25,7 @@ const db = getDatabase(app);
   templateUrl: './cadastro.page.html',
   styleUrls: ['./cadastro.page.scss'],
   standalone: true,
-  imports: [
-    IonicModule,
-    FormsModule
-  ]
+  imports: [IonicModule, FormsModule]
 })
 export class CadastroPage {
   usuario = '';
@@ -37,28 +34,34 @@ export class CadastroPage {
   senha = '';
   confirmarSenha = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private alertCtrl: AlertController) {}
 
-  cadastrar() {
+  async cadastrar() {
+    // Verificação básica
     if (!this.usuario || !this.email || !this.telefone || !this.senha || !this.confirmarSenha) {
-      alert('Por favor, preencha todos os campos.');
+      await this.mostrarAlerta('Erro', 'Por favor, preencha todos os campos.');
       return;
     }
 
+    // Verificação de senha
     if (this.senha !== this.confirmarSenha) {
-      alert('As senhas não coincidem.');
+      await this.mostrarAlerta('Erro', 'As senhas não coincidem.');
       return;
     }
 
-    set(ref(db, 'users/' + this.usuario), {
+    // Evitar duplicidade usando e-mail como chave segura
+    const emailKey = this.email.replace('.', '_').replace('@', '_');
+
+    set(ref(db, 'users/' + emailKey), {
+      nome: this.usuario,
       email: this.email,
       phone: this.telefone,
       password: this.senha
     }).then(() => {
-      alert('Cadastro realizado com sucesso!');
+      this.mostrarAlerta('Sucesso', 'Cadastro realizado com sucesso!');
       this.router.navigate(['/login']);
     }).catch((error) => {
-      alert('Erro ao cadastrar: ' + error.message);
+      this.mostrarAlerta('Erro ao cadastrar', error.message);
     });
   }
 
@@ -68,5 +71,14 @@ export class CadastroPage {
 
   voltarHome() {
     this.router.navigate(['/home']);
+  }
+
+  private async mostrarAlerta(titulo: string, mensagem: string) {
+    const alert = await this.alertCtrl.create({
+      header: titulo,
+      message: mensagem,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }
