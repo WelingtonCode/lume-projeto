@@ -35,18 +35,36 @@ export class NoticiasPage implements OnInit {
   }
 
   async carregarNoticias() {
-    try {
-      const resposta: TmdbResponse = await lastValueFrom(this.tmdbService.getPopularMovies());
-      this.noticias = resposta.results.slice(0, 10).map((filme: TmdbMovie) => ({
-        titulo: filme.title,
-        descricao: filme.overview || 'Sem descrição.',
-        imagem: filme.poster_path
-          ? `https://image.tmdb.org/t/p/w500${filme.poster_path}`
-          : 'assets/default-movie.png',
-        trailerUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent(filme.title)}+trailer`
-      }));
-    } catch (erro) {
-      console.error('Erro ao carregar notícias:', erro);
+  try {
+    // Página 1
+    const resposta1: TmdbResponse = await lastValueFrom(this.tmdbService.getPopularMovies(1));
+    // Página 2
+    const resposta2: TmdbResponse = await lastValueFrom(this.tmdbService.getPopularMovies(2));
+
+    // Junta os resultados das duas páginas
+    const todosFilmes = [...resposta1.results, ...resposta2.results];
+
+    // Remove duplicados pelo 'id'
+    const filmesUnicosMap = new Map<number, TmdbMovie>();
+    for (const filme of todosFilmes) {
+      if (!filmesUnicosMap.has(filme.id)) {
+        filmesUnicosMap.set(filme.id, filme);
+      }
     }
+    const filmesUnicos = Array.from(filmesUnicosMap.values());
+
+    // Agora gera o array de notícias sem duplicados
+    this.noticias = filmesUnicos.slice(0, 35).map((filme: TmdbMovie) => ({
+      titulo: filme.title,
+      descricao: filme.overview || 'Sem descrição.',
+      imagem: filme.poster_path
+        ? `https://image.tmdb.org/t/p/w500${filme.poster_path}`
+        : 'assets/default-movie.png',
+      trailerUrl: `https://www.youtube.com/results?search_query=${encodeURIComponent(filme.title)}+trailer`
+    }));
+
+  } catch (erro) {
+    console.error('Erro ao carregar notícias:', erro);
   }
+}
 }

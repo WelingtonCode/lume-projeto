@@ -47,7 +47,8 @@
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: calc(env(safe-area-inset-bottom) + 60px);
+
 }
 
 /* Ajuste base para ion-toolbar: logo à esquerda, menu hamburger à direita */
@@ -487,6 +488,8 @@
     justify-content: center;
     gap: 1.5rem;
     font-size: 1.25rem;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 60px);
+
   }
 
   .separator {
@@ -498,7 +501,7 @@
 /* Telas maiores ainda (opcional) */
 @media (min-width: 1024px) {
   .breadcrumb-container {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     padding: 12px 0;
   }
 }

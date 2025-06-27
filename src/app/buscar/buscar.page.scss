@@ -2,44 +2,42 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #121212;
-  color: #f0f0f0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.buscar-content {
-  padding: 1rem;
+  background: #121212;
+  color: #fff;
 }
 
 ion-header {
-  background-color: #121212;
+  --background: #121212;
   border-bottom: 1px solid #333;
 }
 
-ion-title {
-  color: #ffc800;
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding-top: 1rem;
+ion-toolbar {
+  --background: #121212;
+  --color: #ffc800;
 }
 
-ion-searchbar {
+ion-title {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #ffc800;
+}
+
+ion-content.buscar-content {
   --background: #1f1f1f;
-  --placeholder-color: #ccc;
+  --color: white;
   --icon-color: #ffc800;
-  --color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(255, 200, 0, 0.2);
-  margin: 1rem 0;
-  padding: 0 0.5rem;
+  --placeholder-color: #ccc;
+  padding: 1rem;
+  padding-bottom: 120px; // espaço extra pro rodapé
+  box-sizing: border-box;
+  overflow-y: auto;
+  flex: 1;
 }
 
 ion-list {
-  max-height: calc(100vh - 230px);
-  overflow-y: auto;
-  border-radius: 8px;
   background: #1f1f1f;
+  border-radius: 8px;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
   padding: 0.5rem 0;
 }
@@ -48,48 +46,42 @@ ion-item {
   --background: #222;
   margin: 0.5rem;
   border-radius: 10px;
-  box-shadow: 0 0 10px #f7c600bb;
+  box-shadow: 0 0 10px #ffc800aa;
   color: #eee;
-  transition: background-color 0.3s ease;
-}
-
-ion-item:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-ion-thumbnail img {
-  border-radius: 6px;
-  object-fit: cover;
-  width: 64px;
-  height: 96px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 ion-label h2 {
-  margin: 0 0 4px 0;
-  font-weight: bold;
-  color: #f7c600;
-  font-size: 1.2em;
+  color: #ffc800;
+  font-size: 1.2rem;
+  margin-bottom: 4px;
 }
 
 ion-label p {
-  margin: 0;
   font-size: 0.85rem;
   color: #bbb;
+  margin: 0;
+}
+
+ion-thumbnail img {
+  width: 64px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
 .sem-resultados {
   text-align: center;
-  font-size: 1.1rem;
   color: #ff6b6b;
+  font-size: 1rem;
   margin-top: 2rem;
 }
 
+/* Rodapé fixo */
 .breadcrumb-container {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: #000000;
+  background-color: #1e1e1e;
   color: white;
   display: flex;
   justify-content: space-around;
@@ -103,7 +95,7 @@ ion-label p {
 .breadcrumb-container a {
   color: white;
   text-decoration: none;
-  padding: 5px 1px;
+  padding: 5px 10px;
   transition: background-color 0.2s ease;
   border-radius: 8px;
 }
@@ -114,4 +106,25 @@ ion-label p {
 
 .separator {
   display: none;
+}
+
+@media (min-width: 600px) {
+  .breadcrumb-container {
+    justify-content: center;
+    gap: 1.5rem;
+    font-size: 1.6rem;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 60px);
+  }
+
+  .separator {
+    display: inline;
+    color: #888;
+  }
+}
+
+@media (min-width: 1024px) {
+  .breadcrumb-container {
+    font-size: 1.6rem;
+    padding: 12px 0;
+  }
 }

@@ -1,6 +1,25 @@
+/* Estilo para o header (fora do .equipe-content) */
+.header {
+  background-color: #000; /* fundo preto */
+  padding: 16px 0;
+  text-align: center;
+  border-bottom: 3px solid #f5c518; /* linha dourada */
+  box-shadow: 0 2px 8px rgba(245, 197, 24, 0.5);
+}
+
+.header .title {
+  color: #f5c518; /* texto dourado */
+  font-weight: 900;
+  font-size: 1.8rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Agora o restante dentro de .equipe-content */
 .equipe-content {
   background-color: #121212;
-  color: #000000;
   padding: 16px;
   font-family: 'Montserrat', sans-serif;
   min-height: 100vh;
@@ -8,66 +27,53 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  .header {
-    background: #1f1f1f;
-    padding: 16px 0;
-    border-bottom: 1px solid #333;
-    text-align: center;
-
-    .title {
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #f5c518;
-      margin: 0;
-      font-size: 1.5rem;
-      letter-spacing: 1px;
-      animation: fadeInDown 0.6s ease-out;
-    }
-
-  }
+  
 
   .equipe-list {
-    margin-top: 24px;
+    margin-top: 32px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
 
     .equipe-item {
       display: flex;
       align-items: center;
       background: #1e1e1e;
-      border-radius: 12px;
-      padding: 14px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 2px 12px rgba(245, 197, 24, 0.3);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
       animation: fadeInUp 0.6s ease forwards;
 
-      &:hover {
-        transform: scale(1.03);
-        box-shadow: 0 4px 12px rgba(245, 197, 24, 0.5);
+      &:hover,
+      &:focus {
+        transform: scale(1.05);
+        box-shadow: 0 6px 20px rgba(245, 197, 24, 0.6);
+        outline: none;
       }
 
       .avatar {
-        width: 64px;
-        height: 64px;
+        width: 72px;
+        height: 72px;
         border-radius: 50%;
         overflow: hidden;
-        margin-right: 14px;
+        margin-right: 18px;
         flex-shrink: 0;
-        box-shadow: 0 0 6px rgba(245, 197, 24, 0.6);
+        box-shadow: 0 0 10px #f5c518;
 
         img {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          display: block;
         }
       }
 
       .label {
-        font-size: 1.15rem;
-        font-weight: 600;
-        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #f5c518;
         word-break: break-word;
       }
     }
@@ -76,26 +82,33 @@
   .voltar-container {
     margin-top: auto;
     text-align: center;
-    padding-top: 24px;
+    padding: 24px 0 12px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #121212;
+    box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.7);
+    z-index: 1000;
 
     .btn-voltar {
       background-color: #000;
       color: #f5c518;
       border: 2px solid #f5c518;
       border-radius: 50px;
-      padding: 12px 28px;
-      font-weight: bold;
+      padding: 14px 32px;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       cursor: pointer;
-      font-size: 1rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      font-size: 1.1rem;
+      box-shadow: 0 4px 10px rgba(245, 197, 24, 0.7);
       transition: all 0.3s;
 
       &:hover {
         background-color: #f5c518;
         color: #121212;
-        transform: translateY(-2px);
+        transform: translateY(-3px);
       }
     }
   }
@@ -105,7 +118,7 @@
 @keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-25px);
   }
   to {
     opacity: 1;
@@ -116,7 +129,7 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(25px);
   }
   to {
     opacity: 1;
@@ -125,52 +138,42 @@
 }
 
 /* Responsividade */
-@media (max-width: 360px) {
-  .equipe-content {
-    .header {
-      .title {
-        font-size: 1.15rem;
-      }
-    }
-
-    .equipe-list {
-      .equipe-item {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 16px;
-
-        .avatar {
-          margin: 0 0 12px 0;
-          width: 80px;
-          height: 80px;
-        }
-
-        .label {
-          font-size: 1rem;
-        }
-      }
-    }
-
-    .voltar-container {
-      .btn-voltar {
-        width: 100%;
-        max-width: 280px;
-        font-size: 0.9rem;
-        padding: 12px 0;
-      }
-    }
+/* Ajuste para o header na tela pequena */
+@media (max-width: 480px) {
+  .header .title {
+    font-size: 1.4rem;   /* menor título */
+    letter-spacing: 2px; /* ajustar espaçamento */
   }
 }
 
-.voltar-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #121212;
-  padding: 16px;
-  text-align: center;
-  z-index: 1000;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+/* Ajuste na equipe-content para ter scroll vertical, respeitando o botão fixo */
+.equipe-content {
+  /* limite a altura para viewport menos a altura do botão fixo */
+  max-height: calc(100vh - 80px); /* 80px pra botão + paddings */
+  overflow-y: auto;
+  padding-bottom: 16px; /* espaço pra não cortar o conteúdo atrás do botão */
+}
+
+/* Ajustes nos cards para telas pequenas */
+@media (max-width: 480px) {
+  .equipe-list {
+    .equipe-item {
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+
+      .avatar {
+        width: 96px;
+        height: 96px;
+        margin: 0 0 12px 0;
+        box-shadow: 0 0 14px #f5c518;
+      }
+
+      .label {
+        font-size: 1.25rem;
+        font-weight: 700;
+        text-align: center;
+      }
+    }
+  }
 }

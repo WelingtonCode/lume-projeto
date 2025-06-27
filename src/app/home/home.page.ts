@@ -80,7 +80,7 @@ export class HomePage implements OnInit {
 
   async carregarDetalhesFilmes() {
     for (const categoria of this.categorias) {
-      const randomPage = Math.floor(Math.random() * 10) + 1;
+      const randomPage = Math.floor(Math.random() * 16) + 1;
       const detalhes = await this.tmdbService
         .getMoviesByCategory(categoria.genreId, randomPage)
         .toPromise();

@@ -17,10 +17,10 @@ interface Filme {
 
 @Component({
   selector: 'app-buscar',
-  templateUrl: './buscar.page.html',
-  styleUrls: ['./buscar.page.scss'],
   standalone: true,
   imports: [CommonModule, FormsModule, IonicModule, RouterModule],
+  templateUrl: './buscar.page.html',
+  styleUrls: ['./buscar.page.scss'],
 })
 export class BuscarPage {
   termoBusca: string = '';
@@ -32,11 +32,13 @@ export class BuscarPage {
     private router: Router
   ) {}
 
+  
+
   async buscarFilmes() {
     if (!this.termoBusca.trim()) {
       this.resultadosBusca = [];
       const toast = await this.toastController.create({
-        message: 'Digite um termo para buscar filmes.',
+        message: 'Digite algo para buscar.',
         duration: 1500,
         color: 'warning',
       });
@@ -62,17 +64,19 @@ export class BuscarPage {
     } catch (error) {
       console.error('Erro ao buscar filmes:', error);
       const toast = await this.toastController.create({
-        message: 'Erro ao buscar filmes. Tente novamente mais tarde.',
+        message: 'Erro ao buscar filmes.',
         duration: 2000,
         color: 'danger',
       });
       await toast.present();
-      this.resultadosBusca = [];
     }
   }
 
+  logout() {
+    this.router.navigate(['/login']);
+  }
+
   verDetalhes(filme: Filme) {
-    // Aqui você pode implementar navegação para detalhes, por exemplo:
-    // this.router.navigate(['/detalhes', filme.id]);
+    // this.router.navigate(['/detalhes', filme.id]); // se quiser abrir página de detalhes
   }
 }

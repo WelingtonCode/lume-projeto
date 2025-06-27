@@ -1,6 +1,6 @@
 :host {
   --background-color: #121212;
-  --text-color: #ffffff;
+  --text-color: #f5c518;
   font-family: 'Montserrat', sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
@@ -113,12 +113,13 @@
 
 /* Conteúdo da página */
 .conteudo {
-  padding: 10px 1rem 1rem;
+  padding: 130px 2.5rem 100px; /* aqui o 70px é o padding-bottom */
   /* Ajustado para reduzir espaço do topo */
   overflow-y: auto;
   height: 100vh;
   box-sizing: border-box;
   background-color: var(--background-color);
+  padding-top: 10px;
 }
 
 /* Grid de notícias */
@@ -140,6 +141,7 @@
   flex-direction: column;
   transition: transform 0.2s ease, box-shadow 0.3s ease;
   cursor: pointer;
+  padding-bottom: 10px;
 }
 
 .noticia-card:hover {
