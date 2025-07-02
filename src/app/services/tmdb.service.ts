@@ -39,31 +39,41 @@ export interface TmdbVideoResponse {
 export class TmdbService {
   private apiKey = '9707b375551b71a796776b9d75944a49';
   private baseUrl = 'https://api.themoviedb.org/3';
+  apiUrl: any;
 
   constructor(private http: HttpClient) { }
 
-  getMoviesByCategory(genreId: number, page: number): Observable<TmdbResponse> {
-    return this.http.get<TmdbResponse>(
-      `${this.baseUrl}/discover/movie?api_key=${this.apiKey}&language=pt-BR&with_genres=${genreId}&page=${page}`
-    );
-  }
+  getPopularMovies(page: number, language = 'pt-BR') {
+  return this.http.get<TmdbResponse>(
+    `https://api.themoviedb.org/3/movie/popular?api_key=${this.apiKey}&page=${page}&language=${language}`
+  );
+}
 
-  getMovieFullDataByTitle(title: string): Observable<TmdbResponse> {
-    return this.http.get<TmdbResponse>(
-      `${this.baseUrl}/search/movie?api_key=${this.apiKey}&query=${title}&language=pt-BR`
-    );
-  }
+getMoviesByCategory(genreId: number, page: number, language = 'PT-BR') {
+  return this.http.get<TmdbResponse>(
+    `https://api.themoviedb.org/3/discover/movie?api_key=${this.apiKey}&with_genres=${genreId}&page=${page}&language=${language}`
+  );
+}
 
-  getPopularMovies(page: number = 1): Observable<TmdbResponse> {
-    return this.http.get<TmdbResponse>(
-      `${this.baseUrl}/movie/popular?api_key=${this.apiKey}&language=pt-BR&page=${page}`
-    );
-  }
+getMovieFullDataByTitle(title: string, language = 'PT-BR') {
+  return this.http.get<TmdbResponse>(
+    `https://api.themoviedb.org/3/search/movie?api_key=${this.apiKey}&query=${encodeURIComponent(title)}&language=${language}`
+  );
+}
+
+getMovieTranslations(movieId: number) {
+  // Exemplo de endpoint: /movie/{movie_id}/translations
+  return this.http.get<{ translations: any[] }>(
+    `${this.apiUrl}/movie/${movieId}/translations?api_key=${this.apiKey}`
+  );
+}
+
 
   // Novo método para pegar vídeos de um filme pelo ID
   getMovieVideos(movieId: number): Observable<TmdbVideoResponse> {
     return this.http.get<TmdbVideoResponse>(
-      `${this.baseUrl}/movie/${movieId}/videos?api_key=${this.apiKey}&language=pt-BR`
+      `${this.baseUrl}/movie/${movieId}/videos?api_key=${this.apiKey}&language=PT-BR`
     );
   }
 }
+

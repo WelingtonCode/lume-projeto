@@ -17,7 +17,7 @@
 <header class="header">
   <div class="toolbar-custom">
     <div class="app-title">
-      <h1>Noticias</h1>
+      <h1>🎥 LumeNews</h1>
     </div>
     <div class="menu-toggle" (click)="toggleMenu()">☰</div>
   </div>
@@ -26,25 +26,35 @@
 <!-- Conteúdo principal -->
 <div class="conteudo">
   <section class="noticias-grid">
-    <article *ngFor="let noticia of noticias" class="noticia-card">
-      <img [src]="noticia.imagem" [alt]="noticia.titulo" />
-      <h3>{{ noticia.titulo }}</h3>
-      <p>{{ noticia.descricao }}</p>
-      <a class="trailer-link" [href]="noticia.trailerUrl" target="_blank" rel="noopener noreferrer">▶ Assistir
-        trailer</a>
-    </article>
-  </section>
+  <article class="noticia-card" *ngFor="let noticia of noticias">
+  <img [src]="noticia.imagem" [alt]="noticia.titulo" />
+  <div class="noticia-conteudo">
+    <h3>{{ noticia.titulo }}</h3>
+    <div class="data-publicacao">{{ noticia.data }} — {{ noticia.autor }}</div>
+    <p>{{ noticia.conteudo }}</p>
+  </div>
+  <a
+    class="trailer-link"
+    [href]="noticia.trailerUrl"
+    target="_blank"
+    rel="noopener noreferrer"
+    >▶ Assistir Trailer</a
+  >
+</article>
+
+</section>
+
 </div>
 
 <!-- Breadcrumb -->
 <nav aria-label="breadcrumb" class="breadcrumb-container">
-  <a href="/login">🏠</a>
+  <a href="/login" title="Login">🏠</a>
   <span class="separator"></span>
-  <a href="/home">🎬</a>
+  <a href="/home" title="Catálogo">🎬</a>
   <span class="separator"></span>
-  <a href="/favoritos">⭐</a>
+  <a href="/favoritos" title="Favoritos">⭐</a>
   <span class="separator"></span>
-  <a href="/noticias">📰</a>
+  <a href="/noticias" title="Notícias">📰</a>
   <span class="separator"></span>
-  <a href="/home">👤</a>
+  <a href="/perfil" title="Perfil">👤</a>
 </nav>

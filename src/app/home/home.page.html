@@ -39,7 +39,10 @@
   <h2>Resultados da busca:</h2>
   <div class="filmes-scroll">
     <article *ngFor="let filme of resultadosBusca" class="filme-card">
-      <div class="favorito-icone" (click)="toggleFavorito(filme); $event.stopPropagation()">
+      <div
+        class="favorito-icone"
+        (click)="toggleFavorito(filme); $event.stopPropagation()"
+      >
         {{ filme.favorito ? '★' : '☆' }}
       </div>
       <img
@@ -58,8 +61,11 @@
   <section *ngFor="let categoria of categorias" class="categoria-section">
     <h2 class="categoria-titulo">{{ categoria.nome }}</h2>
     <div class="filmes-scroll">
-      <article *ngFor="let filme of categoria.filmes | slice:0:8" class="filme-card">
-        <div class="favorito-icone" (click)="toggleFavorito(filme); $event.stopPropagation()">
+      <article *ngFor="let filme of categoria.filmes | slice:0:30" class="filme-card">
+        <div
+          class="favorito-icone"
+          (click)="toggleFavorito(filme); $event.stopPropagation()"
+        >
           {{ filme.favorito ? '★' : '☆' }}
         </div>
         <img
@@ -77,15 +83,58 @@
 <!-- Modal de filme -->
 <div class="modal-filme" *ngIf="filmeExpandido" (click)="toggleFilmeExpandido(null)">
   <div class="modal-filme-conteudo" (click)="$event.stopPropagation()">
-    <img [src]="filmeExpandido.imagem" [alt]="filmeExpandido.titulo" class="modal-filme-poster" />
+    <img
+      [src]="filmeExpandido.imagem"
+      [alt]="filmeExpandido.titulo"
+      class="modal-filme-poster"
+    />
     <div class="modal-filme-info">
       <h2>{{ filmeExpandido.titulo }}</h2>
       <p><strong>Descrição:</strong> {{ filmeExpandido.descricao }}</p>
       <p><strong>Lançamento:</strong> {{ filmeExpandido.lancamento }}</p>
       <p>
-        <strong>Nota:</strong> {{ filmeExpandido.nota }}
-        <span class="nota-barra" [style.width.%]="(filmeExpandido?.nota ?? 0) * 10"></span>
+        <strong>Nota média:</strong> {{ filmeExpandido.nota | number: '1.1-1' }}
+        <span class="nota-barra" [style.width.%]="filmeExpandido.nota * 10"></span>
       </p>
+
+      <!-- Avaliações existentes -->
+      <div *ngIf="avaliacoes.length > 0">
+        <h3>Avaliações:</h3>
+        <ul class="lista-avaliacoes">
+          <li *ngFor="let a of avaliacoes">
+            <strong>{{ a.usuario }}</strong> ({{ a.data }}):<br />
+            <em>{{ a.comentario }}</em><br />
+            Nota: {{ a.nota }}/10
+          </li>
+        </ul>
+      </div>
+
+      <!-- Formulário para adicionar avaliação -->
+      <form (ngSubmit)="adicionarAvaliacao()" #formAvaliacao="ngForm" class="form-avaliacao">
+        <h3>Deixe sua avaliação</h3>
+        <input
+          type="text"
+          name="usuario"
+          placeholder="Seu nome"
+          [(ngModel)]="novaAvaliacao.usuario"
+          required
+        />
+        <textarea
+          name="comentario"
+          placeholder="Seu comentário"
+          [(ngModel)]="novaAvaliacao.comentario"
+          required
+          rows="3"
+        ></textarea>
+        <label>
+          Nota:
+          <select name="nota" [(ngModel)]="novaAvaliacao.nota" required>
+            <option *ngFor="let n of [1,2,3,4,5,6,7,8,9,10]" [value]="n">{{ n }}</option>
+          </select>
+        </label>
+        <button type="submit" [disabled]="formAvaliacao.invalid">Enviar</button>
+      </form>
+
       <button (click)="toggleFilmeExpandido(null)" class="btn-fechar">Fechar</button>
     </div>
   </div>
